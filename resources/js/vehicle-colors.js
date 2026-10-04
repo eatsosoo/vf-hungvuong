@@ -69,7 +69,7 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
         return promise;
     };
 
-    const selectColor = async option => {
+    const selectColor = async (option, requestedDirection) => {
         const version = ++selectionVersion;
         stopAnimation();
         feedback.textContent = '';
@@ -89,6 +89,8 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
             await loadImage(option.dataset.image);
             if (version !== selectionVersion) return;
 
+            const currentIndex = options.findIndex(item => item.getAttribute('aria-current') === 'true');
+            const direction = requestedDirection ?? (options.indexOf(option) > currentIndex ? 1 : -1);
             outgoingImage.src = image.src;
             image.src = option.dataset.image;
             image.alt = option.dataset.alt;
@@ -99,23 +101,21 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
             window.history.replaceState(window.history.state, '', url);
             feedback.textContent = '';
 
-            if (!reducedMotion.matches) {
-                outgoingImage.hidden = false;
-                const timing = { duration: 340, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' };
-                animations = [
-                    image.animate([
-                        { opacity: 0, transform: 'translateX(20px) scale(0.985)' },
-                        { opacity: 1, transform: 'translateX(0) scale(1)' },
-                    ], timing),
-                    outgoingImage.animate([
-                        { opacity: 1, transform: 'translateX(0) scale(1)' },
-                        { opacity: 0, transform: 'translateX(-12px) scale(1.015)' },
-                    ], timing),
-                ];
-                Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
-                    if (version === selectionVersion) stopAnimation();
-                });
-            }
+            outgoingImage.hidden = false;
+            const timing = { duration: 550, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' };
+            animations = [
+                image.animate([
+                    { transform: `translateX(${direction * 100}%)` },
+                    { transform: 'translateX(0)' },
+                ], timing),
+                outgoingImage.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: `translateX(${direction * -100}%)` },
+                ], timing),
+            ];
+            Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
+                if (version === selectionVersion) stopAnimation();
+            });
         } catch {
             if (version !== selectionVersion) return;
             feedback.classList.remove('sr-only');
@@ -143,9 +143,8 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
             if (nextIndex === undefined) return;
             event.preventDefault();
             options[nextIndex].focus();
-            selectColor(options[nextIndex]);
+            const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : undefined;
+            selectColor(options[nextIndex], direction);
         });
     });
-
-    reducedMotion.addEventListener('change', stopAnimation);
 });

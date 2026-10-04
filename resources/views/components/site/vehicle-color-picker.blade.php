@@ -7,7 +7,6 @@
 <div id="colors" class="vehicle-color-viewer scroll-mt-28" data-vehicle-color-viewer>
     <figure class="vehicle-color-stage" data-vehicle-stage
         aria-label="{{ __('Hình ảnh :vehicle', ['vehicle' => $vehicle->name]) }}">
-        <div class="vehicle-color-glow" aria-hidden="true"></div>
         @if($selectedMedia)
             <img
                 class="vehicle-color-image"

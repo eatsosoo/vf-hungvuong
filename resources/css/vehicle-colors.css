@@ -4,11 +4,7 @@
     }
 
     .vehicle-color-stage {
-        @apply relative isolate m-0 aspect-[4/3] w-full sm:aspect-[3/2];
-    }
-
-    .vehicle-color-glow {
-        @apply pointer-events-none absolute inset-x-10 bottom-[15%] h-24 rounded-full bg-brand/15 blur-3xl;
+        @apply relative isolate m-0 aspect-[4/3] w-full overflow-hidden sm:aspect-[3/2];
     }
 
     .vehicle-color-image {

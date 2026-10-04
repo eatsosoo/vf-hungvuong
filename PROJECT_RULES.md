@@ -32,9 +32,12 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
 - Logo website dùng PNG nền trong suốt tại `public/assets/vinfast/logo.png`.
 - Trang ưu đãi hiển thị quyền lợi, xe áp dụng, thời hạn và bộ lọc theo dòng xe; không tự suy diễn mức giảm giá.
   Phần ảnh trong card ưu đãi dùng nền trung tính, không dùng gradient xanh.
-- Trang chi tiết xe có bộ chọn màu ngoại thất, đổi ảnh với hiệu ứng nhẹ và hỗ trợ giảm chuyển động.
+- Trang chi tiết xe có bộ chọn màu ngoại thất, đổi ảnh với hiệu ứng carousel trượt ngang trong 550ms:
+  ảnh hiện tại trượt ra, ảnh màu mới trượt vào theo thứ tự màu; chiều trượt theo phím trái/phải khi dùng bàn phím.
+  Nền ảnh xe dùng nền than của trang, không thêm lớp ánh sáng xanh.
   Khi mở trang, ảnh xe trượt từ phải sang trái trong 850ms; tiêu đề và nội dung giới thiệu căn đầu dòng.
-  Tắt hiệu ứng khi bật giảm chuyển động; chọn màu mới hủy hiệu ứng vào trang đang chạy.
+  Giảm chuyển động chỉ tắt hiệu ứng vào trang; carousel vẫn chạy khi người dùng chủ động chọn màu.
+  Chọn màu mới hủy hiệu ứng vào trang đang chạy và chuyển sang màu được chọn gần nhất.
   Danh mục màu và ảnh tham chiếu nguồn VinFast Việt Nam, lưu nguồn trong dữ liệu seed; ưu tiên ảnh xe nền trong suốt.
   Nút chọn màu hiển thị mã HEX tương ứng; xe hai màu hiển thị cả màu thân và màu nóc.
 - CTA đăng ký lái thử mở drawer từ bên phải trên trang hiện tại, chọn sẵn xe khi có ngữ cảnh.
