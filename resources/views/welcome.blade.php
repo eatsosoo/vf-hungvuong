@@ -477,6 +477,7 @@
                                 {{ __('Họ và tên') }}
                                 <input
                                     name="name"
+                                    placeholder="{{ __('Nhập họ và tên…') }}"
                                     value="{{ old('name') }}"
                                     autocomplete="name"
                                     required
@@ -487,6 +488,7 @@
                                 {{ __('Số điện thoại') }}
                                 <input
                                     name="phone"
+                                    placeholder="{{ __('Ví dụ: 09xxxxxxxx') }}"
                                     value="{{ old('phone') }}"
                                     autocomplete="tel"
                                     type="tel"

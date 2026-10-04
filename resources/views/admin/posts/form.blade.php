@@ -27,7 +27,8 @@
         @endif
         <section class="panel">
             <x-field name="title" label="Tiêu đề bài viết" :value="$post->title" required />
-            <x-field name="slug" label="Đường dẫn (vd: danh-gia-vf7)" :value="$post->slug" required />
+            <x-field name="slug" label="Đường dẫn (vd: danh-gia-vf7)" :value="$post->slug"
+                    slug-source="title" :slug-auto="! $post->exists" required />
             <x-field name="excerpt" label="Tóm tắt" type="textarea" :value="$post->excerpt" />
             <x-admin.post-editor :post="$post" :media="$media" />
             <details>

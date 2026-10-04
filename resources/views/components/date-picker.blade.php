@@ -24,6 +24,7 @@
                 data-date-picker-input
                 {{ $attributes->merge([
                     'id' => $fieldId,
+                    'placeholder' => $hasTime ? __('Chọn ngày và giờ') : __('Chọn ngày'),
                     'aria-invalid' => $errors->has($errorKey) ? 'true' : 'false',
                     'aria-describedby' => $description ?: null,
                 ]) }}
@@ -68,7 +69,7 @@
                     </select>
                     <label class="sr-only" for="{{ $fieldId }}-year">{{ __('Năm') }}</label>
                     <input id="{{ $fieldId }}-year" type="number" min="1" max="9999"
-                        form="{{ $fieldId }}-picker-controls" data-date-picker-year>
+                        placeholder="YYYY" form="{{ $fieldId }}-picker-controls" data-date-picker-year>
                 </div>
                 <button type="button" class="date-picker-icon" data-date-picker-next aria-label="{{ __('Tháng sau') }}">
                     <x-admin.icon name="arrow" />
@@ -89,6 +90,7 @@
                 <div class="date-picker-time">
                     <label for="{{ $fieldId }}-time">{{ __('Giờ') }}</label>
                     <input id="{{ $fieldId }}-time" type="time"
+                        placeholder="HH:mm"
                         form="{{ $fieldId }}-picker-controls"
                         aria-describedby="{{ $fieldId }}-calendar-message" data-date-picker-time>
                 </div>

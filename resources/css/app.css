@@ -620,4 +620,89 @@
     .login-card > a {
         @apply inline-flex min-h-11 items-center font-semibold text-green-text;
     }
+
+    .vehicle-editor-layout {
+        @apply grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem];
+    }
+
+    .vehicle-editor-wide {
+        @apply xl:col-span-2;
+    }
+
+    .vehicle-color-presets {
+        @apply rounded-xl border border-line bg-paper p-4 sm:p-5;
+    }
+
+    .vehicle-color-presets legend {
+        @apply px-2 font-semibold text-heading;
+    }
+
+    .vehicle-color-preset-grid {
+        @apply grid grid-cols-2 gap-2 sm:grid-cols-4 2xl:grid-cols-8;
+    }
+
+    .vehicle-color-preset {
+        @apply flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm;
+        @apply transition-colors hover:border-green-text has-[:checked]:border-green-text has-[:checked]:bg-brand/15;
+    }
+
+    .vehicle-color-preset svg {
+        @apply size-6 shrink-0;
+    }
+
+    .vehicle-color-editor-grid {
+        @apply grid gap-4 md:grid-cols-2 2xl:grid-cols-3;
+    }
+
+    .vehicle-color-card {
+        @apply min-w-0 rounded-2xl border border-line bg-white p-4 sm:p-5;
+    }
+
+    .vehicle-color-card-heading {
+        @apply mb-4 flex items-center justify-between gap-3 border-b border-line pb-3;
+    }
+
+    .vehicle-admin-swatch {
+        @apply size-9 shrink-0 rounded-full border border-line;
+    }
+
+    .vehicle-color-card .two-columns {
+        @apply grid-cols-1 xl:grid-cols-2;
+    }
+
+    .vehicle-color-card .field {
+        @apply mb-4;
+    }
+
+    .vehicle-color-card .media-picker-actions {
+        @apply gap-2;
+    }
+
+    .vehicle-color-card .media-picker-actions button {
+        @apply px-3;
+    }
+
+    .vehicle-color-editor-status {
+        @apply my-4 text-sm text-green-text;
+    }
+
+    .vehicle-catalog-model {
+        @apply flex min-w-56 items-center gap-4;
+    }
+
+    .vehicle-catalog-model img, .vehicle-catalog-placeholder {
+        @apply h-16 w-24 shrink-0 rounded-xl bg-paper object-contain;
+    }
+
+    .vehicle-catalog-placeholder {
+        @apply flex items-center justify-center text-muted;
+    }
+
+    .vehicle-catalog-colors {
+        @apply mt-2 flex items-center gap-1.5 whitespace-nowrap text-xs text-muted;
+    }
+
+    .vehicle-catalog-colors svg {
+        @apply size-5 shrink-0 rounded-full border border-line;
+    }
 }

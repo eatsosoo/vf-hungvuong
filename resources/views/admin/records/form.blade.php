@@ -36,6 +36,7 @@
                         ? $record->{$field}?->format('Y-m-d\TH:i') : $record->{$field};
                 @endphp
                 <x-field :name="$field" :label="$labels[$field]" :type="$inputType" :value="$fieldValue"
+                    :slug-source="$field === 'slug' ? 'title' : null" :slug-auto="! $record->exists"
                     :required="in_array($field, ['title', 'slug', 'body', 'starts_at', 'ends_at'])" />
             @endif
         @endforeach

@@ -29,6 +29,8 @@ class VehicleController extends Controller
         ]);
 
         $records = Vehicle::query()
+            ->with(['media', 'colors'])
+            ->withCount(['variants', 'colors'])
             ->when(
                 filled($data['q'] ?? null),
                 fn (Builder $query): Builder => $query->where('name', 'like', '%'.$data['q'].'%'),
@@ -56,7 +58,7 @@ class VehicleController extends Controller
             ->paginate((int) ($data['per_page'] ?? 20))
             ->withQueryString();
 
-        return view('admin.records.index', [
+        return view('admin.vehicles.index', [
             'title' => 'Danh mục xe', 'resource' => 'vehicles', 'records' => $records,
         ]);
     }

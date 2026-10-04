@@ -1,6 +1,8 @@
 import './date-picker.js';
 import './media.js';
 import './select.js';
+import './slug.js';
+import './vehicle-editor.js';
 
 document.querySelectorAll('[data-page-size-form]').forEach(form => {
     const select = form.querySelector('[data-page-size]');

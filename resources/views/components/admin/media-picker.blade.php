@@ -35,7 +35,8 @@
         <small class="field-hint" data-media-status role="status" aria-live="polite"></small>
         <noscript>
             <label for="{{ $fieldId }}-manual">ID ảnh từ <a href="{{ route('admin.media.index') }}">thư viện</a></label>
-            <input type="number" name="{{ $name }}" id="{{ $fieldId }}-manual" value="{{ $selectedId }}" min="1">
+            <input type="number" name="{{ $name }}" id="{{ $fieldId }}-manual" value="{{ $selectedId }}" min="1"
+                placeholder="Nhập ID ảnh, ví dụ: 123">
         </noscript>
     </x-field-wrapper>
 </div>

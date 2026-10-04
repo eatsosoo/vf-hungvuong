@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class PostRequest extends FormRequest
@@ -19,7 +20,8 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255',
+                Rule::unique('posts', 'title')->ignore($this->route('post'))],
             'slug' => ['required', 'string', 'max:180', 'regex:/\A[a-z0-9]+(?:-[a-z0-9]+)*\z/',
                 Rule::unique('posts')->ignore($this->route('post')),
                 Rule::unique('post_redirects', 'slug')],
@@ -43,5 +45,26 @@ class PostRequest extends FormRequest
             'tags' => ['array', 'max:30'], 'tags.*' => ['integer', 'distinct', 'exists:tags,id'],
             'vehicles' => ['array', 'max:30'], 'vehicles.*' => ['integer', 'distinct', 'exists:vehicles,id'],
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.unique' => 'Tiêu đề bài viết đã tồn tại. Vui lòng chọn tên khác.',
+            'slug.unique' => 'Đường dẫn đã được sử dụng. Vui lòng chọn đường dẫn khác.',
+            'slug.regex' => 'Đường dẫn chỉ gồm chữ thường không dấu, số và gạch ngang giữa các từ.',
+        ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $source = $this->input('title');
+        if (is_string($source)) {
+            $this->merge(['title' => trim($source)]);
+            if (blank($this->input('slug'))) {
+                $slug = Str::slug(trim($source));
+                $this->merge(['slug' => rtrim(Str::substr($slug, 0, 180), '-')]);
+            }
+        }
     }
 }

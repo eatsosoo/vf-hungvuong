@@ -117,6 +117,7 @@ if (batchForm) {
             input.id = `upload-alt-${index}`;
             input.name = `alts[${index}]`;
             input.maxLength = 255;
+            input.placeholder = 'Mô tả nội dung của ảnh…';
             input.value = entry.alt;
             label.htmlFor = input.id;
             input.addEventListener('input', () => { entry.alt = input.value; });

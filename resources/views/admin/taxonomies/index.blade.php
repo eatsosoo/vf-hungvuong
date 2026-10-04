@@ -5,7 +5,7 @@
     <form class="panel two-columns" method="post" action="{{ route('admin.taxonomies.store', $kind) }}">
         @csrf
         <x-field name="name" label="Tên" required />
-        <x-field name="slug" label="Đường dẫn" required />
+        <x-field name="slug" label="Đường dẫn" slug-source="name" required />
         <button>
             Thêm mới
         </button>
@@ -64,6 +64,7 @@
                         </td>
                         <td>
                             <x-field name="slug" :id="'taxonomy-slug-'.$record->id" label="Đường dẫn"
+                                slug-source="name" :slug-auto="false"
                                 :value="$record->slug" :use-old="false"
                                 :form="'taxonomy-update-'.$record->id" required />
                         </td>

@@ -42,6 +42,8 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Form gửi tới endpoint khách hàng hiện có và hiển thị validation/thành công ngay trong drawer.
   Component dùng chung cho trang chủ và layout client; khi JavaScript không khả dụng, dùng trang liên hệ.
 - Dùng lại Blade Components cho field input/textarea, select, chọn ảnh, tiêu đề, điều hướng, bảng, phân trang, trạng thái rỗng, badge và thống kê. Field cần label, ID riêng, lỗi liên kết bằng ARIA và giữ giá trị cũ sau validation.
+- Input và textarea có placeholder theo nội dung hoặc định dạng cần nhập; component field dùng mặc định
+  theo loại/tên field và cho phép ghi đè. Placeholder client được dịch Việt/Anh, luôn giữ label riêng.
 - Cỡ chữ trang chủ là chuẩn chung cho client và quản trị: nội dung 14px, chữ phụ/nút/ô nhập 12px,
   nhãn form 11px, chú thích 10px; tiêu đề trang client 40–61px (mobile 36px), tiêu đề section 28–40px,
   tiêu đề card/nhóm form 18px. Token cỡ chữ dùng chung trong `resources/css/typography.css`,
@@ -76,6 +78,11 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Lịch lái thử hỗ trợ chế độ lịch tháng và danh sách; mobile dùng lịch theo ngày, giữ cùng bộ lọc và phạm vi phân quyền.
 - Ảnh được kiểm tra và chuyển sang WebP bằng GD, lưu trên disk local riêng tư và phục vụ qua endpoint ảnh. Chưa chốt dịch vụ lưu trữ production.
 - Mã màu xe hỗ trợ nhập HEX và color picker đồng bộ; màu nóc xe có thể để trống.
+- Danh mục xe admin hiển thị ảnh đại diện, phân khúc, số phiên bản và mẫu màu ngoại thất trong bảng.
+  Form xe nhóm thông tin, ảnh/hiển thị, phiên bản và màu. Màu được sửa theo card, có thể chọn nhiều
+  màu gợi ý để thêm cùng lúc, thêm màu riêng và bỏ từng dòng; tối đa 30 màu, lưu cùng mẫu xe trong transaction.
+  Màu gợi ý là điểm khởi đầu có thể chỉnh, không thay thế màu công bố theo từng mẫu xe.
+  Giữ chỉ số dòng sau validation để lỗi gắn đúng card; chỉ bỏ dòng hoàn toàn trống, không bỏ màu nhập dở.
 - Bộ chọn ảnh admin hỗ trợ tải trực tiếp hoặc modal thư viện trực quan, tìm kiếm và phân trang toàn bộ ảnh.
   Thư viện hỗ trợ tải tối đa 20 ảnh mỗi lần, xem trước và sửa alt từng ảnh (mặc định tên file), bỏ ảnh trước khi gửi.
   Giao diện kiểm tra giới hạn mỗi file và tổng lô theo cấu hình PHP hiện tại, trong giới hạn validation của ứng dụng.
@@ -158,6 +165,11 @@ Không mặc định thêm Repository, lớp Service tổng hợp hoặc interfa
 - Biểu mẫu tư vấn, báo giá và lái thử cần validation và rate limit phù hợp. Giữ CSRF cho request web thay đổi dữ liệu.
 - Nhật ký quản trị ghi người thực hiện, hành động và đối tượng cho thay đổi quan trọng; không sao chép dữ liệu nhạy cảm vào nhật ký.
 - Không thêm API công khai khi chưa có nhu cầu. Khi cần API, tuân thủ quy ước versioning và API Resource của dự án.
+
+- Biểu mẫu quản trị tự sinh slug từ tiêu đề/tên khi tạo mới, cho phép sửa thủ công; xóa slug để tạo lại.
+  Khi sửa, giữ URL hiện có. Backend cũng sinh slug nếu để trống; giới hạn 180 ký tự, không tự thêm hậu tố.
+  Tiêu đề/tên và slug phải không trùng trong từng loại nội dung (bài viết, trang, khuyến mãi, xe, danh mục, thẻ);
+  bỏ qua chính bản ghi đang sửa và tiếp tục giữ slug chuyển hướng cũ của bài viết.
 
 ## 8. Giao diện và chất lượng code
 

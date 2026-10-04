@@ -40,6 +40,8 @@
                 />
                 <x-field
                     name="slug"
+                    slug-source="title"
+                    :slug-auto="! $record->exists"
                     label="Đường dẫn"
                     :value="$record->slug"
                     hint="Viết thường, không dấu, nối từ bằng gạch ngang. Ví dụ: uu-dai-vf-7."
