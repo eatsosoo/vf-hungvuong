@@ -33,6 +33,8 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
 - Trang ưu đãi hiển thị quyền lợi, xe áp dụng, thời hạn và bộ lọc theo dòng xe; không tự suy diễn mức giảm giá.
   Phần ảnh trong card ưu đãi dùng nền trung tính, không dùng gradient xanh.
 - Trang chi tiết xe có bộ chọn màu ngoại thất, đổi ảnh với hiệu ứng nhẹ và hỗ trợ giảm chuyển động.
+  Khi mở trang, ảnh xe trượt từ phải sang trái trong 850ms; tiêu đề và nội dung giới thiệu căn đầu dòng.
+  Tắt hiệu ứng khi bật giảm chuyển động; chọn màu mới hủy hiệu ứng vào trang đang chạy.
   Danh mục màu và ảnh tham chiếu nguồn VinFast Việt Nam, lưu nguồn trong dữ liệu seed; ưu tiên ảnh xe nền trong suốt.
   Nút chọn màu hiển thị mã HEX tương ứng; xe hai màu hiển thị cả màu thân và màu nóc.
 - CTA đăng ký lái thử mở drawer từ bên phải trên trang hiện tại, chọn sẵn xe khi có ngữ cảnh.
@@ -41,9 +43,15 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Component dùng chung cho trang chủ và layout client; khi JavaScript không khả dụng, dùng trang liên hệ.
 - Dùng lại Blade Components cho field input/textarea, select, chọn ảnh, tiêu đề, điều hướng, bảng, phân trang, trạng thái rỗng, badge và thống kê. Field cần label, ID riêng, lỗi liên kết bằng ARIA và giữ giá trị cũ sau validation.
 - Cỡ chữ trang chủ là chuẩn chung cho client và quản trị: nội dung 14px, chữ phụ/nút/ô nhập 12px,
-  nhãn form 11px, chú thích 10px; tiêu đề trang 40–61px (mobile 36px), tiêu đề section 28–40px,
+  nhãn form 11px, chú thích 10px; tiêu đề trang client 40–61px (mobile 36px), tiêu đề section 28–40px,
   tiêu đề card/nhóm form 18px. Token cỡ chữ dùng chung trong `resources/css/typography.css`,
   ánh xạ vào theme Tailwind để utility và component không dùng hai hệ cỡ chữ khác nhau.
+- Tiêu đề trang quản trị dùng token riêng 28–32px để phù hợp mật độ bảng và biểu mẫu.
+- Select dùng dropdown chung cho client và admin: nền trắng, option bo góc,
+  lựa chọn hiện tại có nền lime và dấu chọn. JavaScript nâng cấp select gốc, giữ name/value,
+  validation, sự kiện change, reset và lựa chọn phụ thuộc; hỗ trợ bàn phím và ARIA combobox/listbox.
+  Popover hiển thị trên bảng/dialog; khi JavaScript hoặc Popover API không khả dụng, dùng select gốc.
+  Select nhiều giá trị cho bật/tắt từng option và giữ dropdown mở; không cần giữ Ctrl/Command.
 - Typography admin phân biệt rõ tiêu đề, nội dung, nhãn và gợi ý bằng token màu và độ đậm;
   tiêu đề 600–700, nhãn 500, nội dung và giá trị nhập 400. Không để giá trị nhập kế thừa độ đậm của nhãn.
 - Bảng và phân trang nằm trong cùng một khối. Danh sách bản ghi hiển thị ID, ngày tạo và ngày cập nhật;

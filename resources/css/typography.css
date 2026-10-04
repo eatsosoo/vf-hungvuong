@@ -172,6 +172,7 @@
     --type-label: 11px;
     --type-card-title: 18px;
     --type-page-title: clamp(40px, 4.4vw, 61px);
+    --type-admin-page-title: clamp(28px, 2.5vw, 32px);
     --type-section-title: clamp(28px, 3vw, 40px);
 }
 

@@ -4,3 +4,4 @@ import './test-drive-drawer.js';
 import './vehicle-colors.js';
 
 import './site-navbar.js';
+import './select.js';

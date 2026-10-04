@@ -4,18 +4,37 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
     const image = viewer.querySelector('[data-vehicle-image]');
     const outgoingImage = viewer.querySelector('[data-vehicle-image-outgoing]');
     const options = [...viewer.querySelectorAll('[data-vehicle-color]')];
-    if (!image || !outgoingImage || !options.length) return;
+    if (!image) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let entranceAnimation;
+    let entranceCancelled = false;
+    const cancelEntrance = () => {
+        entranceCancelled = true;
+        entranceAnimation?.cancel();
+    };
+    const enterVehicle = () => {
+        if (entranceCancelled || reducedMotion.matches || !image.naturalWidth) return;
+        entranceAnimation = image.animate([
+            { opacity: 0, transform: 'translateX(min(40vw, 320px))' },
+            { opacity: 1, transform: 'translateX(0)' },
+        ], { duration: 850, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+    };
+    if (image.complete) enterVehicle();
+    else image.addEventListener('load', enterVehicle, { once: true });
+    reducedMotion.addEventListener('change', cancelEntrance);
+    if (!outgoingImage || !options.length) return;
 
     const stage = viewer.querySelector('[data-vehicle-stage]');
     const colorName = viewer.querySelector('[data-vehicle-color-name]');
     const loading = viewer.querySelector('[data-vehicle-color-loading]');
     const feedback = viewer.querySelector('[data-vehicle-color-feedback]');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const cachedImages = new Map();
     let selectionVersion = 0;
     let animations = [];
 
     const stopAnimation = () => {
+        cancelEntrance();
         animations.forEach(animation => animation.cancel());
         animations = [];
         outgoingImage.hidden = true;

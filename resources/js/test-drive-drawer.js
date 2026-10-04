@@ -1,6 +1,7 @@
 import { translate } from './client-translations.js';
 
 import './date-picker.js';
+import { syncSelects } from './select.js';
 
 const drawer = document.querySelector('[data-test-drive-drawer]');
 
@@ -61,6 +62,7 @@ if (drawer && typeof drawer.showModal === 'function') {
             option.disabled = unavailable;
             if (unavailable && option.selected) variant.value = '';
         });
+        syncSelects(form);
     };
 
     const clearErrors = () => {
@@ -139,6 +141,7 @@ if (drawer && typeof drawer.showModal === 'function') {
         updateVehicleSummary();
         setVehicleSelectionExpanded(!vehicle.value || vehicle.getAttribute('aria-invalid') === 'true'
             || variant.getAttribute('aria-invalid') === 'true');
+        syncSelects(form);
         previousOverflow = document.documentElement.style.overflow;
         previousPadding = document.body.style.paddingRight;
         const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;

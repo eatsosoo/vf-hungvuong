@@ -1,4 +1,5 @@
 import { translate } from './client-translations.js';
+import { syncSelects } from './select.js';
 
 const dateLocale = document.documentElement.lang === 'en' ? 'en-US' : 'vi-VN';
 const dateLabel = new Intl.DateTimeFormat(dateLocale, { dateStyle: 'full', timeZone: 'UTC' });
@@ -136,6 +137,7 @@ function initializeDatePicker(picker) {
 
     const render = (moveFocus = false) => {
         month.value = String(visibleMonth.getUTCMonth() + 1);
+        syncSelects(picker);
         year.value = String(visibleMonth.getUTCFullYear());
         year.min = String(minimum().getUTCFullYear());
         year.max = String(maximum().getUTCFullYear());

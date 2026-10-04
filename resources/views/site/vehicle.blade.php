@@ -10,12 +10,12 @@
     <section class="overflow-hidden bg-night text-white" aria-labelledby="vehicle-title">
         <div class="client-container pt-6 pb-12 sm:pt-8 sm:pb-16">
             <x-site.breadcrumbs :items="$breadcrumbs" dark />
-            <div class="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] lg:gap-12">
-                <div class="min-w-0">
+            <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] lg:gap-12">
+                <div class="min-w-0 text-start">
                     <p class="client-eyebrow text-brand">{{ $vehicle->segment ?: __('Dòng xe VinFast') }}</p>
                     <h1
                         id="vehicle-title"
-                        class="mt-4 leading-[1.13] font-bold tracking-tight text-balance"
+                        class="mt-4 text-start leading-[1.13] font-bold tracking-tight"
                     >
                         {{ $vehicle->name }}
                     </h1>

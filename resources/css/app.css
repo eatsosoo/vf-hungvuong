@@ -78,7 +78,7 @@
 
     :where(.admin-shell, .login-body) h1 {
         @apply leading-tight font-bold tracking-tight text-heading text-balance;
-        font-size: var(--type-page-title);
+        font-size: var(--type-admin-page-title);
     }
 
     .admin-shell h2 {

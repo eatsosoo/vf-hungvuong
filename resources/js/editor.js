@@ -4,6 +4,7 @@ import { Markdown } from '@tiptap/markdown';
 import Image from '@tiptap/extension-image';
 import { TableKit } from '@tiptap/extension-table';
 import Placeholder from '@tiptap/extension-placeholder';
+import { syncSelects } from './select.js';
 
 const root = document.querySelector('[data-post-editor]');
 const form = document.querySelector('[data-post-form]');
@@ -139,6 +140,7 @@ if (root && form) {
             }
         });
         heading.value = String(editor.getAttributes('heading').level ?? 'paragraph');
+        syncSelects(root);
         root.querySelector('[data-table-tools]').hidden = !editor.isActive('table');
     };
 
