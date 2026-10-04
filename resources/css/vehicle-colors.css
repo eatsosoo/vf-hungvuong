@@ -1,0 +1,97 @@
+@layer components {
+    .vehicle-color-viewer {
+        @apply min-w-0;
+    }
+
+    .vehicle-color-stage {
+        @apply relative isolate m-0 aspect-[4/3] w-full sm:aspect-[3/2];
+    }
+
+    .vehicle-color-glow {
+        @apply pointer-events-none absolute inset-x-10 bottom-[15%] h-24 rounded-full bg-brand/15 blur-3xl;
+    }
+
+    .vehicle-color-image {
+        @apply absolute inset-0 h-full w-full object-contain;
+        filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.2));
+    }
+
+    .vehicle-color-image-outgoing {
+        @apply pointer-events-none;
+    }
+
+    .vehicle-color-placeholder {
+        @apply flex h-full flex-col items-center justify-center gap-4 text-sm text-white/65;
+    }
+
+    .vehicle-color-loading {
+        @apply absolute bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap;
+        @apply rounded-full border border-white/15 bg-night/90 px-4 py-2 text-xs font-medium text-white;
+    }
+
+    .vehicle-color-loading > span {
+        @apply size-2 rounded-full bg-brand;
+    }
+
+    .vehicle-color-controls {
+        @apply relative mx-auto max-w-xl rounded-2xl border border-white/15 bg-white/5 p-5 sm:px-6;
+    }
+
+    .vehicle-color-caption {
+        @apply flex items-center justify-between gap-4;
+    }
+
+    .vehicle-color-eyebrow {
+        @apply text-xs font-medium tracking-wider text-white/65 uppercase;
+    }
+
+    .vehicle-color-name {
+        @apply mt-1 text-base leading-6 font-semibold text-white sm:text-lg;
+        min-height: 1.5rem;
+    }
+
+    .vehicle-color-count {
+        @apply shrink-0 rounded-full border border-white/15 px-3 py-1 text-xs text-white/75;
+    }
+
+    .vehicle-color-options {
+        @apply mt-4 flex flex-wrap gap-2;
+    }
+
+    .vehicle-color-option {
+        @apply relative flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-transparent;
+        @apply transition-[border-color,background-color] duration-200 hover:bg-white/10;
+    }
+
+    .vehicle-color-option[aria-current='true'] {
+        @apply border-brand;
+    }
+
+    .client-shell .vehicle-color-option:focus-visible {
+        @apply outline-brand;
+    }
+
+    .vehicle-color-swatch {
+        @apply block size-8 shrink-0 rounded-full border border-white/25 shadow-inner;
+    }
+
+    .vehicle-color-check {
+        @apply absolute -right-0.5 -bottom-0.5 hidden size-4 items-center justify-center rounded-full bg-brand text-night;
+    }
+
+    .vehicle-color-option[aria-current='true'] .vehicle-color-check {
+        @apply inline-flex;
+    }
+
+    .vehicle-color-hint {
+        @apply mt-3 text-xs leading-5 text-white/65;
+    }
+
+    .vehicle-color-feedback {
+        @apply text-sm leading-6 text-brand;
+    }
+
+    .vehicle-color-feedback:empty {
+        @apply hidden;
+    }
+}

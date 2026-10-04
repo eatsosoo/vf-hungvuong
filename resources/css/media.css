@@ -1,0 +1,210 @@
+@layer components {
+    .color-control {
+        @apply flex min-w-0 items-center gap-2;
+    }
+
+    .color-control input[type='text'] {
+        @apply min-w-0 flex-1 font-mono;
+    }
+
+    .admin-shell .color-control input[type='color'] {
+        @apply size-11 min-h-11 w-11 shrink-0 cursor-pointer rounded-xl p-1;
+    }
+
+    .admin-shell .color-clear {
+        @apply size-11 shrink-0 px-0;
+    }
+
+    .media-picker {
+        @apply min-w-0;
+    }
+
+    .media-picker-preview {
+        @apply flex min-h-24 min-w-0 items-center gap-4 rounded-xl border border-line bg-white p-3;
+    }
+
+    .media-picker-preview img {
+        @apply h-24 w-32 shrink-0 rounded-lg bg-paper object-contain;
+    }
+
+    .media-picker-preview strong {
+        @apply block break-all text-sm;
+    }
+
+    .media-picker-actions {
+        @apply flex flex-wrap gap-2;
+    }
+
+    .admin-shell .media-picker-actions button {
+        @apply px-3 text-sm;
+    }
+
+    .media-picker [data-media-status]:empty {
+        @apply hidden;
+    }
+
+    .media-section-heading {
+        @apply mb-5 flex flex-wrap items-start justify-between gap-3;
+    }
+
+    .media-section-heading h2 {
+        @apply mb-2;
+    }
+
+    .media-section-heading p, .media-dialog-header p {
+        @apply mb-0 text-sm leading-relaxed text-muted;
+    }
+
+    .media-dropzone {
+        @apply flex min-h-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl;
+        @apply border-2 border-dashed border-muted/60 bg-paper px-5 py-7 text-center text-green-text;
+        @apply transition-colors hover:border-green-text hover:bg-brand/10;
+    }
+
+    .media-dropzone span {
+        @apply text-sm text-muted;
+    }
+
+    .media-dropzone:focus-within, .media-dropzone[data-dragging='true'] {
+        @apply border-green-text bg-brand/10 outline-2 outline-offset-4 outline-green-text;
+    }
+
+    .upload-queue-heading {
+        @apply mt-6 flex flex-wrap items-center justify-between gap-3;
+    }
+
+    .upload-queue {
+        @apply mt-4 grid gap-3;
+    }
+
+    .upload-queue-item {
+        @apply grid min-w-0 items-start gap-3 rounded-xl border border-line bg-paper p-3;
+        @apply sm:grid-cols-[6rem_minmax(0,1fr)_auto];
+    }
+
+    .upload-queue-item img {
+        @apply h-20 w-24 rounded-lg bg-white object-contain;
+    }
+
+    .upload-queue-item .field {
+        @apply mb-0;
+    }
+
+    .upload-queue-item strong {
+        @apply mb-2 block break-all text-sm;
+    }
+
+    .media-upload-footer {
+        @apply mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5;
+    }
+
+    .media-toolbar {
+        @apply mb-6 flex flex-wrap items-end gap-3 rounded-2xl border border-line bg-white p-4;
+    }
+
+    .media-toolbar .field {
+        @apply mb-0 min-w-40 flex-1;
+    }
+
+    .media-toolbar .field:first-child {
+        @apply grow-[2];
+    }
+
+    .media-grid {
+        @apply grid min-w-0 grid-cols-1 items-start gap-4 sm:grid-cols-2;
+    }
+
+    .media-grid[data-columns='2'] {
+        @apply lg:grid-cols-2;
+    }
+
+    .media-grid[data-columns='3'] {
+        @apply lg:grid-cols-3;
+    }
+
+    .media-grid[data-columns='4'] {
+        @apply lg:grid-cols-4;
+    }
+
+    .media-grid[data-columns='6'] {
+        @apply lg:grid-cols-4 xl:grid-cols-6;
+    }
+
+    .media-card {
+        @apply min-w-0 overflow-hidden rounded-2xl border border-line bg-white;
+    }
+
+    .media-card-image {
+        @apply aspect-[4/3] h-auto w-full bg-paper object-contain p-2;
+    }
+
+    .media-card-body {
+        @apply min-w-0 p-3;
+    }
+
+    .media-card-name {
+        @apply block truncate text-sm;
+    }
+
+    .admin-shell .media-card-alt {
+        @apply mt-3 mb-0 line-clamp-2 text-sm leading-relaxed text-muted;
+    }
+
+    .admin-shell .media-card-details {
+        @apply mt-4 mb-0 border-0 bg-transparent p-0;
+    }
+
+    .media-card-details summary {
+        @apply min-h-11 text-sm;
+    }
+
+    .media-empty {
+        grid-column: 1 / -1;
+    }
+
+    .media-dialog {
+        @apply fixed m-auto max-h-[90dvh] w-[min(1120px,calc(100%-2rem))] max-w-none overflow-auto;
+        @apply rounded-3xl border border-line bg-paper p-5 text-ink shadow-2xl sm:p-6;
+    }
+
+    .media-dialog::backdrop {
+        background: rgb(16 28 32 / 65%);
+    }
+
+    .media-dialog-header {
+        @apply mb-5 flex items-start justify-between gap-4;
+    }
+
+    .media-dialog-header h2 {
+        @apply mb-2;
+    }
+
+    .admin-shell .media-dialog-header > button {
+        @apply size-11 shrink-0 p-0;
+    }
+
+    .media-dialog-footer {
+        @apply mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4;
+    }
+
+    .media-library-status {
+        @apply text-sm text-muted;
+    }
+
+    .admin-shell .media-choice {
+        @apply flex min-w-0 flex-col items-stretch gap-0 overflow-hidden rounded-2xl;
+        @apply border border-line bg-white p-0 text-left text-ink hover:border-green-text hover:bg-white;
+    }
+
+    .admin-shell .media-choice[aria-pressed='true'] {
+        @apply border-2 border-green-text bg-brand/10;
+    }
+
+    .media-choice strong {
+        @apply block truncate px-3 pt-3 text-sm;
+    }
+
+    .media-choice small {
+        @apply px-3 pb-3 font-normal;
+    }
+}

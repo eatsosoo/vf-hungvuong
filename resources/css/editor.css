@@ -1,0 +1,253 @@
+@reference './app.css';
+
+@layer components {
+    .post-editor {
+        @apply mb-7 overflow-hidden rounded-2xl border border-muted/60 bg-white;
+    }
+
+    .editor-heading {
+        @apply flex flex-wrap items-center justify-between gap-4 border-b border-line bg-paper px-4 py-4;
+    }
+
+    .admin-shell .editor-heading p {
+        @apply mb-0;
+    }
+
+    .admin-shell .editor-mode {
+        @apply min-h-11 rounded-lg border-line bg-white px-3 py-2 text-xs text-ink hover:bg-paper;
+    }
+
+    .admin-shell .editor-mode[aria-pressed='true'] {
+        @apply border-green-text bg-brand/25 text-green-text;
+    }
+
+    .editor-controls {
+        @apply border-b border-line bg-white px-3 py-3;
+    }
+
+    .editor-toolbar {
+        @apply mt-3 flex flex-wrap items-center gap-2;
+    }
+
+    .admin-shell .editor-tool {
+        @apply size-11 min-h-11 rounded-lg border-line bg-white p-2 text-muted hover:border-green-text hover:bg-paper;
+    }
+
+    .admin-shell .editor-tool[aria-pressed='true'] {
+        @apply border-green-text bg-brand/25 text-green-text;
+    }
+
+    .admin-shell .editor-tool:disabled {
+        @apply opacity-40;
+    }
+
+    .admin-shell .editor-table-tools {
+        @apply mt-3 mb-0 rounded-xl border-line bg-paper p-3 text-sm;
+    }
+
+    .editor-canvas .tiptap {
+        @apply min-h-[440px] px-5 py-5 text-base leading-8 text-ink outline-none sm:px-7;
+    }
+
+    .editor-canvas .tiptap:focus-visible {
+        @apply outline-2 -outline-offset-2 outline-green-text;
+    }
+
+    .editor-canvas .tiptap[aria-invalid='true'] {
+        @apply bg-red-50;
+    }
+
+    .editor-canvas .tiptap > :first-child {
+        @apply mt-0;
+    }
+
+    .editor-canvas .tiptap :is(h2, h3, h4) {
+        @apply mt-8 mb-4 font-bold leading-snug;
+    }
+
+    .editor-canvas .tiptap h2 {
+        @apply text-2xl;
+    }
+
+    .editor-canvas .tiptap h3 {
+        @apply text-xl;
+    }
+
+    .editor-canvas .tiptap p {
+        @apply mb-5;
+    }
+
+    .editor-canvas .tiptap :is(ul, ol) {
+        @apply my-5 space-y-2 pl-6;
+    }
+
+    .editor-canvas .tiptap ul {
+        @apply list-disc;
+    }
+
+    .editor-canvas .tiptap ol {
+        @apply list-decimal;
+    }
+
+    .editor-canvas .tiptap a {
+        @apply cursor-pointer text-green-text underline underline-offset-4;
+    }
+
+    .editor-canvas .tiptap img {
+        @apply my-5 h-auto max-w-full rounded-xl;
+    }
+
+    .editor-canvas .tiptap blockquote {
+        @apply my-5 border-l-4 border-brand bg-paper py-2 pl-5;
+    }
+
+    .editor-canvas .tiptap pre {
+        @apply my-5 overflow-x-auto rounded-xl bg-night p-5 font-mono text-sm text-white;
+    }
+
+    .editor-canvas .tiptap table {
+        @apply my-5 w-full table-fixed border-collapse text-sm;
+    }
+
+    .editor-canvas .tiptap :is(td, th) {
+        @apply relative min-w-20 border border-line p-3 align-top;
+    }
+
+    .editor-canvas .tiptap th {
+        @apply bg-paper font-bold;
+    }
+
+    .editor-canvas .tiptap td p, .editor-canvas .tiptap th p {
+        @apply mb-0;
+    }
+
+    .editor-canvas .tiptap .selectedCell {
+        @apply bg-brand/20;
+    }
+
+    .editor-canvas .tiptap .is-editor-empty:first-child::before {
+        @apply pointer-events-none float-left h-0 text-muted;
+        content: attr(data-placeholder);
+    }
+
+    .editor-preview {
+        @apply min-h-[440px] px-5 py-5 text-base leading-8 sm:px-7;
+    }
+
+    .editor-preview :is(h2, h3, h4) {
+        @apply mt-8 mb-4 font-bold;
+    }
+
+    .editor-preview :is(ul, ol) {
+        @apply my-5 pl-6;
+    }
+
+    .editor-preview ul {
+        @apply list-disc;
+    }
+
+    .editor-preview ol {
+        @apply list-decimal;
+    }
+
+    .editor-preview :is(img, table, pre) {
+        @apply my-5 max-w-full;
+    }
+
+    .editor-preview table {
+        @apply block overflow-x-auto border border-line;
+    }
+
+    .editor-preview :is(td, th) {
+        @apply border border-line p-3;
+    }
+
+    .editor-preview :is(a, button) {
+        @apply text-green-text underline;
+    }
+
+    [data-editor-markdown] .field {
+        @apply m-0 p-4;
+    }
+
+    .editor-footer {
+        @apply flex flex-wrap justify-between gap-2 border-t border-line bg-paper px-4 py-3 text-xs text-muted;
+    }
+
+    .editor-recovery {
+        @apply border-b border-line bg-brand/15 p-4 text-sm;
+    }
+
+    .post-editor[data-fullscreen='true'] {
+        @apply fixed inset-3 z-50 m-0 overflow-y-auto shadow-2xl sm:inset-6;
+    }
+
+    .post-editor[data-fullscreen='true'] .editor-canvas .tiptap {
+        @apply min-h-[65vh];
+    }
+
+    .editor-fullscreen-active {
+        overflow: hidden;
+    }
+
+    .editor-dialog {
+        @apply fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto;
+        @apply rounded-2xl border border-line bg-white p-6 text-ink shadow-2xl sm:p-8;
+    }
+
+    .editor-dialog::backdrop {
+        background: rgb(16 28 32 / 70%);
+    }
+
+    .editor-media-dialog {
+        @apply max-w-3xl;
+    }
+
+    .editor-dialog-heading {
+        @apply mb-5 flex items-start justify-between gap-4;
+    }
+
+    .editor-dialog-heading h2 {
+        @apply mb-0;
+    }
+
+    .editor-media-grid {
+        @apply mt-4 grid max-h-64 grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3;
+    }
+
+    .admin-shell .editor-media-item {
+        @apply block min-w-0 rounded-xl border-line bg-paper p-3 text-left text-xs text-ink hover:border-green-text;
+    }
+
+    .editor-media-item img {
+        @apply mb-2 aspect-[3/2] w-full rounded-lg bg-white object-contain;
+    }
+
+    .editor-media-item span {
+        @apply block truncate;
+    }
+
+    .seo-score {
+        @apply flex shrink-0 items-baseline gap-1 rounded-2xl bg-paper px-4 py-3 text-xs text-muted;
+    }
+
+    .seo-score strong {
+        @apply text-3xl leading-none text-green-text tabular-nums;
+    }
+
+    .seo-checks {
+        @apply mt-5 space-y-3;
+    }
+
+    .seo-checks li {
+        @apply rounded-xl border border-line p-3 text-xs text-muted;
+    }
+
+    .seo-checks li[data-passed='true'] {
+        @apply border-green-text/25 bg-brand/10;
+    }
+
+    .seo-checks [data-check-indicator] {
+        @apply text-sm;
+    }
+}

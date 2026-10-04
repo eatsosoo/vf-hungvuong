@@ -1,0 +1,502 @@
+@import 'tailwindcss/theme.css' layer(theme);
+@reference './app.css';
+@import './date-picker.css';
+
+.test-drive-drawer {
+    --color-brand: #bbf451;
+    --color-brand-hover: #d0ff77;
+    --color-night: #101c20;
+    --color-ink: #162125;
+    --color-paper: #f5f7f5;
+    --color-line: #dee4df;
+    --color-muted: #526164;
+    --color-green-text: #426515;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: min(100%, 560px);
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: 1.5;
+    box-shadow: -16px 0 64px rgb(16 28 32 / 20%);
+    transform: translateX(0);
+    transition: transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.test-drive-drawer[data-opening], .test-drive-drawer[data-closing] {
+    transform: translateX(100%);
+}
+
+.test-drive-drawer::backdrop {
+    background: rgb(16 28 32 / 56%);
+}
+
+.test-drive-drawer *, .test-drive-drawer *::before, .test-drive-drawer *::after {
+    box-sizing: border-box;
+}
+
+.test-drive-drawer [hidden] {
+    display: none !important;
+}
+
+.test-drive-drawer :is(button, input, select, textarea) {
+    font-family: inherit;
+}
+
+.test-drive-drawer :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-green-text);
+    outline-offset: 3px;
+}
+
+.test-drive-drawer svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.test-drive-drawer .rotate-180 {
+    transform: rotate(180deg);
+}
+
+.test-drive-drawer .sr-only, .test-drive-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.test-drive-shell {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.test-drive-header {
+    position: relative;
+    display: flex;
+    min-height: 76px;
+    flex-shrink: 0;
+    align-items: center;
+    padding: max(16px, env(safe-area-inset-top)) 84px 16px 32px;
+    background: var(--color-night);
+    color: white;
+}
+
+.test-drive-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+}
+
+.test-drive-close {
+    position: absolute;
+    top: max(16px, env(safe-area-inset-top));
+    right: 20px;
+    display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.test-drive-close:hover, .test-drive-close:active {
+    background: rgb(255 255 255 / 12%);
+}
+
+.test-drive-header .test-drive-close:focus-visible {
+    outline-color: var(--color-brand);
+}
+
+.test-drive-form {
+    display: flex;
+    min-height: 0;
+    margin: 0;
+    flex: 1;
+    flex-direction: column;
+}
+
+.test-drive-body {
+    min-height: 0;
+    padding: 28px 32px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    flex: 1;
+    scroll-padding-block: 24px;
+}
+
+.test-drive-fields {
+    display: grid;
+    gap: 20px;
+}
+
+.test-drive-vehicle-summary {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 12px;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    background: white;
+}
+
+.test-drive-vehicle-visual {
+    display: grid;
+    width: 88px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 9px;
+    background: var(--color-paper);
+}
+
+.test-drive-vehicle-visual img,
+.test-drive-vehicle-fallback {
+    width: 100%;
+    height: 100%;
+    grid-area: 1 / 1;
+}
+
+.test-drive-vehicle-visual img {
+    display: block;
+    object-fit: contain;
+}
+
+.test-drive-vehicle-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-green-text);
+}
+
+.test-drive-vehicle-fallback svg {
+    width: 28px;
+    height: 28px;
+}
+
+.test-drive-vehicle-copy {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.test-drive-vehicle-copy strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.test-drive-vehicle-copy p {
+    margin: 4px 0 0;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.test-drive-change-vehicle {
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 1px solid var(--color-line);
+    border-radius: 9px;
+    background: white;
+    color: var(--color-green-text);
+    font-size: var(--type-small);
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.test-drive-change-vehicle:hover,
+.test-drive-change-vehicle:active {
+    background: var(--color-paper);
+}
+
+.test-drive-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.test-drive-drawer .field {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+    margin: 0;
+    gap: 8px;
+}
+
+.test-drive-drawer .field-label {
+    display: block;
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--type-label);
+    font-weight: 700;
+}
+
+.test-drive-drawer .field-label [aria-hidden='true'] {
+    color: var(--color-red-800);
+}
+
+.test-drive-drawer .field > :is(input, select, textarea), .test-drive-drawer [data-date-picker-input] {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--color-muted) 60%, transparent);
+    border-radius: 12px;
+    background-color: white;
+    color: var(--color-ink);
+    font-size: var(--type-small);
+    line-height: 1.4;
+    transition: border-color 160ms ease;
+}
+
+.test-drive-drawer .field > :is(input, select, textarea):focus, .test-drive-drawer [data-date-picker-input]:focus {
+    border-color: var(--color-green-text);
+}
+
+.test-drive-drawer .field > :is(input, textarea)::placeholder {
+    color: var(--color-muted);
+}
+
+.test-drive-drawer .field > textarea {
+    min-height: 92px;
+    resize: vertical;
+}
+
+.test-drive-drawer .field > select {
+    padding-right: 42px;
+}
+
+.test-drive-drawer .date-picker[data-ready] [data-date-picker-input] {
+    padding-right: 56px;
+}
+
+.test-drive-drawer .field-hint {
+    display: block;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.test-drive-drawer .field > [aria-invalid='true'],
+.test-drive-drawer [data-date-picker-input][aria-invalid='true'] {
+    border-color: var(--color-red-700);
+    background: var(--color-red-50);
+}
+
+.test-drive-drawer :is(.error, [data-drawer-field-error]) {
+    display: block;
+    margin: 0;
+    color: var(--color-red-800);
+    font-size: var(--type-small);
+    line-height: 1.5;
+}
+
+.test-drive-consent {
+    display: flex;
+    min-height: 44px;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.test-drive-consent input {
+    width: 20px;
+    height: 20px;
+    min-height: 0;
+    margin: 3px 0 0;
+    padding: 0;
+    border-radius: 4px;
+    accent-color: var(--color-green-text);
+    flex-shrink: 0;
+}
+
+.test-drive-consent span {
+    min-width: 0;
+    color: var(--color-muted);
+    font-size: var(--type-small);
+    line-height: 1.7;
+}
+
+.test-drive-consent a {
+    color: var(--color-green-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.test-drive-footer {
+    flex-shrink: 0;
+    padding: 18px 32px max(20px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--color-line);
+    background: white;
+}
+
+.test-drive-submit {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--color-brand);
+    color: var(--color-night);
+    font-size: var(--type-small);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.test-drive-submit:hover, .test-drive-submit:active {
+    background: var(--color-brand-hover);
+}
+
+.test-drive-submit:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.test-drive-footer p {
+    margin: 9px 0 0;
+    color: var(--color-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+.test-drive-feedback {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-red-200);
+    border-radius: 12px;
+    background: var(--color-red-50);
+    color: var(--color-red-800);
+    font-size: 14px;
+}
+
+.test-drive-success {
+    display: flex;
+    min-height: 0;
+    padding: 48px 32px max(32px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.test-drive-success-icon {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: var(--color-night);
+}
+
+.test-drive-success-icon svg {
+    width: 30px;
+    height: 30px;
+}
+
+.test-drive-success h3 {
+    margin: 24px 0 12px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
+}
+
+.test-drive-success p {
+    max-width: 360px;
+    margin: 0 0 28px;
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+.test-drive-drawer .date-picker-panel {
+    border-style: solid;
+}
+
+.test-drive-drawer .date-picker-month-year :is(input, select),
+.test-drive-drawer .date-picker-time input {
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 8px;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+}
+
+.test-drive-drawer .date-picker-time input {
+    border-color: var(--color-line);
+    padding-inline: 12px;
+}
+
+.test-drive-drawer .date-picker-panel :is(.date-picker-icon, .date-picker-day) {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .test-drive-header {
+        padding-left: 24px;
+    }
+
+    .test-drive-body {
+        padding: 24px;
+    }
+
+    .test-drive-footer {
+        padding-inline: 24px;
+    }
+
+    .test-drive-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .test-drive-vehicle-summary {
+        gap: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .test-drive-drawer, .test-drive-drawer button,
+    .test-drive-drawer .field > :is(input, select, textarea), .test-drive-drawer [data-date-picker-input] {
+        transition: none;
+    }
+}

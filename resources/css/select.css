@@ -1,0 +1,15 @@
+select:not([multiple]) {
+    appearance: none;
+    background-image: url('../../public/assets/select-chevron.svg');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 3rem;
+}
+
+@media (forced-colors: active) {
+    select:not([multiple]) {
+        appearance: auto;
+        background-image: none;
+    }
+}

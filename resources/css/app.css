@@ -1,0 +1,623 @@
+@import 'tailwindcss';
+@import './select.css';
+@import './date-picker.css';
+@import './media.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: var(--font-body);
+    --text-xs: var(--type-caption);
+    --text-sm: var(--type-small);
+    --text-base: var(--type-body);
+    --text-lg: var(--type-body);
+    --text-xl: var(--type-card-title);
+    --text-2xl: 24px;
+    --text-3xl: 28px;
+    --text-4xl: 36px;
+    --text-5xl: 48px;
+    --text-6xl: 61px;
+    --color-brand: #bbf451;
+    --color-brand-hover: #d0ff77;
+    --color-night: #101c20;
+    --color-ink: #162125;
+    --color-heading: #101c20;
+    --color-body-text: #37474b;
+    --color-label-text: #344448;
+    --color-placeholder: #69777a;
+    --color-paper: #f5f7f5;
+    --color-line: #dee4df;
+    --color-muted: #526164;
+    --color-green-text: #426515;
+}
+
+@layer base {
+    .admin-shell, .login-body {
+        @apply bg-paper font-sans text-base leading-relaxed font-normal text-body-text;
+    }
+
+    :where(.admin-shell, .login-body) :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+        @apply outline-2 outline-offset-4 outline-green-text;
+    }
+
+    :where(.admin-shell, .login-body) :is(input, select, textarea) {
+        @apply min-h-11 w-full rounded-xl border border-muted/75 bg-white px-3.5 py-2.5 text-sm text-ink;
+        @apply font-normal transition-colors placeholder:font-normal placeholder:text-placeholder;
+        @apply focus:border-green-text;
+        @apply disabled:cursor-not-allowed disabled:bg-paper disabled:opacity-60;
+    }
+
+    :where(.admin-shell, .login-body) [aria-invalid='true'] {
+        @apply border-red-700 bg-red-50;
+    }
+
+    :where(.admin-shell, .login-body) input[readonly] {
+        @apply bg-paper text-muted;
+    }
+
+    .admin-shell input[type='checkbox'] {
+        @apply size-5 min-h-0 shrink-0 accent-green-text;
+    }
+
+    .admin-shell [hidden] {
+        display: none !important;
+    }
+
+    .admin-shell input[type='file'] {
+        @apply file:mr-3 file:rounded-lg file:border-0 file:bg-paper file:px-3 file:py-1 file:text-ink;
+    }
+
+    :where(.admin-shell, .login-body) textarea {
+        @apply min-h-28 resize-y;
+    }
+
+    .admin-shell textarea[name='body'] {
+        @apply min-h-96 font-mono text-sm leading-7;
+    }
+
+    :where(.admin-shell, .login-body) h1 {
+        @apply leading-tight font-bold tracking-tight text-heading text-balance;
+        font-size: var(--type-page-title);
+    }
+
+    .admin-shell h2 {
+        @apply mb-4 leading-snug font-semibold tracking-tight text-heading;
+        font-size: var(--type-card-title);
+    }
+
+    .admin-shell :is(h3, h4) {
+        @apply font-semibold text-heading;
+    }
+
+    .admin-shell p {
+        @apply mb-4 break-words;
+    }
+
+    :where(.admin-shell, .login-body) small {
+        @apply block text-sm text-muted;
+    }
+
+    .admin-content a:not(.button, .badge, .stat-card) {
+        @apply font-medium text-green-text underline-offset-4 hover:underline;
+    }
+
+    :where(.admin-shell, .login-body) :is(button, .button) {
+        @apply inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2;
+        @apply rounded-full border border-transparent bg-brand px-5 py-2.5 text-sm font-bold text-night;
+        @apply transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    :where(.admin-shell, .login-body) .secondary {
+        @apply border-line bg-white text-ink hover:bg-paper;
+    }
+
+    .admin-shell .danger {
+        @apply border-red-200 bg-red-50 text-red-800 hover:bg-red-100;
+    }
+
+    .admin-shell summary {
+        @apply cursor-pointer font-semibold text-green-text;
+    }
+
+    .admin-shell details {
+        @apply mb-6 rounded-xl border border-line bg-paper p-4;
+    }
+
+    .admin-shell details[open] summary {
+        @apply mb-3;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :where(.admin-shell, .login-body) * {
+            transition-duration: 0s !important;
+            animation-duration: 0s !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    .admin-shell {
+        @apply min-h-dvh lg:grid lg:grid-cols-[17rem_minmax(0,1fr)];
+    }
+
+    .sidebar {
+        @apply border-b border-white/10 bg-night p-5 text-white lg:sticky lg:top-0;
+        @apply lg:h-dvh lg:overflow-y-auto lg:border-b-0 lg:px-4 lg:py-7;
+    }
+
+    .studio-brand {
+        @apply flex items-center gap-3 text-lg leading-tight font-bold tracking-wider;
+    }
+
+    .studio-brand small {
+        @apply mt-1 text-[10px] font-normal tracking-[0.15em] text-white/70;
+    }
+
+    .brand-logo {
+        @apply size-11 shrink-0 object-contain invert;
+    }
+
+    .nav-group {
+        @apply mt-6 mb-2 px-3 text-[10px] font-bold tracking-[0.16em] text-white/60 uppercase;
+    }
+
+    .nav-link {
+        @apply my-1 flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5;
+        @apply text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white;
+    }
+
+    .nav-link[aria-current='page'] {
+        @apply bg-brand font-bold text-night hover:bg-brand-hover hover:text-night;
+    }
+
+    .sidebar :is(a, button):focus-visible {
+        @apply outline-brand;
+    }
+
+    .sidebar .menu-toggle {
+        @apply size-11 rounded-xl border-white/20 bg-transparent p-2 text-white hover:bg-white/10 lg:hidden;
+    }
+
+    .sidebar .secondary {
+        @apply w-full border-white/20 bg-white/5 text-white hover:bg-white/10;
+    }
+
+    .admin-main {
+        @apply min-w-0;
+    }
+
+    .admin-top {
+        @apply flex flex-wrap items-center justify-between gap-4 border-b border-line bg-white px-5 py-4;
+        @apply sm:px-8 lg:px-10;
+    }
+
+    .admin-shell .sidebar-toggle {
+        @apply size-11 shrink-0 rounded-xl border-line bg-white p-2 text-muted hover:bg-paper;
+    }
+
+    @media (min-width: 1024px) {
+        .admin-shell[data-sidebar-collapsed='true'] {
+            grid-template-columns: 5.75rem minmax(0, 1fr);
+        }
+
+        [data-sidebar-collapsed='true'] .sidebar {
+            @apply px-3;
+        }
+
+        [data-sidebar-collapsed='true'] :is(.nav-label, .sidebar-brand-label, .nav-group) {
+            @apply sr-only;
+        }
+
+        [data-sidebar-collapsed='true'] :is(.nav-link, .sidebar-logout, .studio-brand) {
+            @apply justify-center;
+        }
+
+        [data-sidebar-collapsed='true'] .nav-link {
+            @apply px-2;
+        }
+
+        [data-sidebar-collapsed='true'] .studio-brand {
+            @apply w-full;
+        }
+    }
+
+    .admin-content {
+        @apply mx-auto max-w-[1500px] px-5 pt-8 pb-12 sm:px-8 lg:px-10;
+        overflow-wrap: anywhere;
+    }
+
+    .eyebrow {
+        @apply mb-3 text-xs font-bold tracking-[0.16em] text-green-text uppercase;
+    }
+
+    .page-heading {
+        @apply mb-7 flex flex-wrap items-start justify-between gap-5;
+    }
+
+    .panel {
+        @apply my-5 min-w-0 rounded-2xl border border-line bg-white p-5 sm:p-6;
+    }
+
+    .field {
+        @apply mb-5 grid min-w-0 content-start gap-2 text-sm font-normal;
+    }
+
+    .field-label {
+        @apply font-medium text-label-text;
+        font-size: var(--type-label);
+    }
+
+    .field-hint {
+        @apply text-sm leading-relaxed font-normal text-muted;
+    }
+
+    .error {
+        @apply text-sm font-medium text-red-800;
+    }
+
+    .filters {
+        @apply my-6 flex flex-wrap items-end gap-4 rounded-2xl border border-line bg-white p-5;
+    }
+
+    .filters .field {
+        @apply mb-0 min-w-40 flex-1;
+    }
+
+    .two-columns {
+        @apply grid gap-x-6 sm:grid-cols-2;
+    }
+
+    .editor-grid {
+        @apply grid items-start gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)];
+    }
+
+    .editor-grid > .panel {
+        @apply my-0;
+    }
+
+    .stat-grid {
+        @apply grid gap-4 sm:grid-cols-2 xl:grid-cols-4;
+    }
+
+    .card-grid {
+        @apply grid gap-5 sm:grid-cols-2 2xl:grid-cols-3;
+    }
+
+    .card-grid > .panel {
+        @apply my-0;
+    }
+
+    .stat-card {
+        @apply block min-w-0 rounded-2xl border border-line bg-white p-6;
+    }
+
+    a.stat-card {
+        @apply transition-colors hover:border-green-text;
+    }
+
+    .stat {
+        @apply mt-4 block text-4xl font-bold tracking-tight text-ink tabular-nums;
+    }
+
+    .actions, .form-actions {
+        @apply flex flex-wrap items-center gap-3;
+    }
+
+    .form-actions {
+        @apply mt-6 border-t border-line pt-6;
+    }
+
+    .table-row-actions {
+        @apply flex flex-nowrap items-center gap-2;
+    }
+
+    .table-row-actions form {
+        @apply m-0 shrink-0;
+    }
+
+    .table-block {
+        @apply my-5 min-w-0 overflow-hidden rounded-2xl border border-line bg-white;
+    }
+
+    .table-block .table-wrap {
+        @apply my-0 rounded-none border-0;
+    }
+
+    .table-block .table-pagination {
+        @apply mt-0 rounded-none border-0 border-t border-line;
+    }
+
+    .table-block .filters {
+        @apply m-0 rounded-none border-0 border-t border-line;
+    }
+
+    .admin-shell .table-action {
+        @apply inline-flex size-11 min-w-11 items-center justify-center rounded-xl border border-line;
+        @apply bg-white p-0 text-label-text no-underline transition-colors hover:bg-paper hover:text-heading;
+    }
+
+    .admin-shell .table-action.danger {
+        @apply border-red-200 bg-red-50 text-red-700 hover:bg-red-100;
+    }
+
+    .table-date, .table-id {
+        @apply whitespace-nowrap tabular-nums;
+    }
+
+    .table-wrap {
+        @apply my-5 overflow-x-auto rounded-2xl border border-line bg-white p-0;
+    }
+
+    .table-wrap > table {
+        @apply w-full min-w-[640px] border-collapse text-left text-sm font-normal text-body-text;
+    }
+
+    .table-wrap > table > thead > tr > th {
+        @apply border-b border-line bg-paper px-5 py-3 text-sm font-semibold whitespace-nowrap text-label-text;
+    }
+
+    .table-wrap > table > tbody > tr > td {
+        @apply border-b border-line px-5 py-4 align-middle;
+        overflow-wrap: anywhere;
+        max-width: 26rem;
+    }
+
+    .table-wrap > table > tbody > tr {
+        @apply transition-colors hover:bg-paper/60;
+    }
+
+    .table-wrap > table > tbody > tr:last-child > td {
+        @apply border-b-0;
+    }
+
+    .table-wrap > table > tbody > tr > td small {
+        @apply mt-1 text-xs;
+    }
+
+    .table-wrap > table > tbody > tr > td a {
+        @apply inline-flex min-h-11 items-center;
+    }
+
+    .table-toolbar {
+        @apply my-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-white p-5;
+    }
+
+    .table-toolbar-copy {
+        @apply min-w-0 basis-full flex-1 sm:basis-0;
+    }
+
+    .table-toolbar-copy :is(h2, p) {
+        @apply mb-0;
+    }
+
+    .table-toolbar-copy p {
+        @apply mt-1 text-sm font-normal text-muted;
+    }
+
+    .table-toolbar-copy > span {
+        @apply mt-1 block text-sm font-normal text-muted;
+    }
+
+    .admin-shell .text-button {
+        @apply border-transparent bg-transparent text-muted hover:bg-paper;
+    }
+
+    .admin-content .table-title {
+        @apply font-semibold text-heading;
+    }
+
+    .table-secondary {
+        @apply font-normal text-muted;
+    }
+
+    .admin-content .column-sort {
+        @apply flex min-h-11 items-center justify-between gap-3 rounded-lg px-2 -mx-2;
+        @apply font-semibold text-label-text no-underline transition-colors hover:bg-line/60 hover:text-heading;
+    }
+
+    .admin-content .column-sort[data-active='true'] {
+        @apply text-heading;
+    }
+
+    .column-sort[data-active='true'] svg {
+        @apply text-green-text;
+    }
+
+    .admin-shell .table-filter-options {
+        @apply mb-0 w-full border-line bg-paper p-4;
+    }
+
+    .table-filter-grid {
+        @apply grid gap-x-4 sm:grid-cols-2 xl:grid-cols-3;
+    }
+
+    .table-pagination {
+        @apply mt-5 flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-line bg-white p-5;
+        @apply text-sm text-muted;
+    }
+
+    .pagination-info {
+        @apply grid gap-3;
+    }
+
+    .pagination-info p {
+        @apply mb-0;
+    }
+
+    .pagination-info strong {
+        @apply font-semibold text-ink;
+    }
+
+    .pagination-size, .pagination-pages {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
+    .pagination-size select {
+        @apply w-auto min-w-20 py-2 text-sm;
+    }
+
+    .pagination-current {
+        @apply grid size-11 place-items-center rounded-full bg-night font-semibold text-white;
+    }
+
+    .admin-shell .pagination-number {
+        @apply min-w-11 px-3;
+    }
+
+    .pagination-disabled {
+        @apply inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-4 text-muted;
+    }
+
+    .pagination-gap {
+        @apply px-1;
+    }
+
+    .promotion-layout {
+        @apply grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem];
+    }
+
+    .promotion-main, .promotion-side {
+        @apply grid min-w-0 gap-6;
+    }
+
+    .promotion-layout .panel {
+        @apply my-0;
+    }
+
+    .form-section {
+        @apply min-w-0 rounded-2xl border border-line bg-white p-5 sm:p-6;
+    }
+
+    .admin-shell .section-heading {
+        @apply mb-2 text-lg font-semibold text-heading;
+    }
+
+    .admin-shell .section-description {
+        @apply mb-6 text-sm leading-relaxed font-normal text-muted;
+    }
+
+    .form-section > .field:last-child {
+        @apply mb-0;
+    }
+
+    .form-section > legend.section-heading {
+        @apply float-left w-full;
+    }
+
+    .form-section > legend + * {
+        clear: both;
+    }
+
+    .admin-shell textarea.promotion-body {
+        @apply min-h-80 font-sans text-sm leading-7 font-normal;
+    }
+
+    .choice-grid {
+        @apply grid gap-3 sm:grid-cols-2;
+    }
+
+    .choice-card {
+        @apply flex min-h-16 cursor-pointer items-start gap-3 rounded-xl border border-line bg-white p-4;
+        @apply transition-colors hover:border-green-text has-[:checked]:border-green-text has-[:checked]:bg-brand/10;
+        @apply has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2;
+        @apply has-[:focus-visible]:outline-green-text;
+    }
+
+    .choice-card input[type='checkbox'] {
+        @apply mt-0.5;
+    }
+
+    .choice-copy {
+        @apply grid min-w-0 gap-1 text-sm;
+    }
+
+    .choice-copy strong {
+        @apply font-medium text-ink;
+    }
+
+    .choice-copy span {
+        @apply font-normal text-muted;
+    }
+
+    .form-footer {
+        @apply mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-white p-5;
+    }
+
+    .promotion-layout .form-footer {
+        @apply xl:col-span-2;
+    }
+
+    .form-footer .form-actions {
+        @apply mt-0 border-t-0 pt-0;
+    }
+
+    .form-footer p {
+        @apply mb-0 text-sm text-muted;
+    }
+
+    .badge {
+        @apply inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold;
+    }
+
+    .notice, .error-box {
+        @apply mb-6 rounded-2xl border p-5;
+    }
+
+    .notice {
+        @apply border-green-200 bg-green-50 text-green-900;
+    }
+
+    .error-box {
+        @apply border-red-200 bg-red-50 text-red-900;
+    }
+
+    .error-box ul {
+        @apply mt-2 list-disc space-y-1 pl-5;
+    }
+
+    .narrow {
+        @apply max-w-2xl;
+    }
+
+    .media-thumb {
+        @apply h-48 w-full rounded-xl bg-paper object-contain;
+    }
+
+    .note {
+        @apply mb-4 border-l-2 border-brand pl-4;
+    }
+
+    .repeat-row {
+        @apply mb-4 rounded-xl border border-line bg-paper p-4;
+    }
+
+    .repeat-row .field {
+        @apply mb-2;
+    }
+
+    .panel > h2:not(:first-child) {
+        @apply mt-8 border-t border-line pt-6;
+    }
+
+    .login-body {
+        @apply grid min-h-dvh place-items-center bg-night p-5;
+    }
+
+    .login-card {
+        @apply w-full max-w-md rounded-3xl border border-line bg-white p-7 sm:p-10;
+    }
+
+    .login-card h1 {
+        @apply mb-3 text-3xl;
+    }
+
+    .login-card form > button {
+        @apply mt-2 mb-6 w-full;
+    }
+
+    .login-card > a {
+        @apply inline-flex min-h-11 items-center font-semibold text-green-text;
+    }
+}

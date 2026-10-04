@@ -1,0 +1,154 @@
+@layer components {
+    .date-picker-control {
+        @apply relative;
+    }
+
+    .date-picker[data-ready] [data-date-picker-input] {
+        @apply min-w-0 pr-14;
+    }
+
+    .date-picker[data-ready] [data-date-picker-input]::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+
+    .date-picker-toggle {
+        @apply absolute inset-y-0 right-1 my-auto flex size-11 cursor-pointer items-center justify-center;
+        @apply rounded-lg border-0 bg-transparent p-0 text-green-text transition-colors hover:bg-paper;
+    }
+
+    .date-picker-toggle:disabled {
+        @apply cursor-not-allowed text-muted opacity-50;
+    }
+
+    .date-picker-panel {
+        @apply fixed m-0 overflow-y-auto rounded-2xl border border-line bg-white p-4 text-ink shadow-2xl;
+        width: min(24rem, calc(100vw - 1.5rem));
+        max-width: none;
+        max-height: calc(100dvh - 1.5rem);
+    }
+
+    .date-picker-panel::backdrop {
+        background: color-mix(in srgb, var(--color-night) 12%, transparent);
+    }
+
+    .date-picker-heading {
+        @apply flex items-center justify-between gap-2 border-b border-line pb-2 text-base;
+    }
+
+    .date-picker-panel .date-picker-icon {
+        @apply flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl;
+        @apply border-0 bg-transparent p-0 text-muted transition-colors hover:bg-paper hover:text-ink;
+    }
+
+    .date-picker-navigation {
+        @apply mt-3 flex items-center gap-1;
+    }
+
+    .date-picker-month-year {
+        @apply grid min-w-0 flex-1 grid-cols-[1fr_5rem] items-center gap-1;
+    }
+
+    .date-picker-month-year :is(input, select) {
+        @apply min-h-11 rounded-lg border-transparent bg-paper py-2 pl-2 text-sm font-semibold;
+    }
+
+    .date-picker-month-year input {
+        @apply px-1 text-center;
+        appearance: textfield;
+    }
+
+    .date-picker-month-year input::-webkit-inner-spin-button {
+        appearance: none;
+    }
+
+    .date-picker-grid {
+        @apply mt-3 w-full table-fixed border-collapse text-center text-sm;
+    }
+
+    .date-picker-grid th {
+        @apply h-9 p-0 text-xs font-semibold text-muted;
+    }
+
+    .date-picker-grid td {
+        @apply p-0;
+    }
+
+    .date-picker-panel .date-picker-day {
+        @apply relative flex min-h-11 w-full cursor-pointer items-center justify-center rounded-xl;
+        @apply border-0 bg-transparent p-0 text-sm font-medium text-ink transition-colors hover:bg-paper;
+    }
+
+    .date-picker-day[data-outside] {
+        @apply text-muted;
+    }
+
+    .date-picker-day[aria-current='date']::after {
+        @apply absolute bottom-1.5 size-1 rounded-full bg-green-text;
+        content: '';
+    }
+
+    .date-picker-grid [aria-selected='true'] .date-picker-day {
+        @apply bg-brand font-bold text-night hover:bg-brand-hover;
+    }
+
+    .date-picker-panel .date-picker-day[aria-disabled='true'],
+    .date-picker-panel .date-picker-day:disabled,
+    .date-picker-panel .date-picker-icon:disabled {
+        @apply cursor-not-allowed bg-transparent text-muted opacity-35;
+    }
+
+    .date-picker-time {
+        @apply mt-3 flex items-center justify-between gap-3 border-t border-line pt-3 text-sm font-semibold;
+    }
+
+    .date-picker-time input {
+        @apply min-h-11 w-36 py-2;
+    }
+
+    .date-picker-panel .date-picker-selection {
+        @apply mt-2 mb-0 text-sm text-muted;
+    }
+
+    .date-picker-panel .date-picker-message {
+        @apply mt-2 mb-0 text-sm text-red-800;
+    }
+
+    .date-picker-footer {
+        @apply mt-3 flex items-center gap-2 border-t border-line pt-3;
+    }
+
+    .date-picker-panel .date-picker-action {
+        @apply min-h-11 cursor-pointer rounded-xl border-0 bg-paper px-3 py-2;
+        @apply text-sm font-semibold text-green-text transition-colors hover:bg-line;
+    }
+
+    .date-picker-panel .date-picker-apply {
+        @apply ml-auto min-h-11 cursor-pointer rounded-xl border-0 bg-brand px-4 py-2;
+        @apply text-sm font-bold text-night transition-colors hover:bg-brand-hover;
+    }
+
+    .date-picker-panel :is(.date-picker-action, .date-picker-apply):disabled {
+        @apply cursor-not-allowed opacity-40;
+    }
+
+    .date-picker-panel .date-picker-help {
+        @apply mt-3 mb-0 text-xs leading-relaxed text-muted;
+    }
+
+    .date-picker [hidden] {
+        display: none !important;
+    }
+}
+
+@media (max-width: 359px) {
+    .date-picker-panel {
+        width: calc(100vw - 0.25rem);
+        padding-inline: 0.125rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .date-picker button {
+        transition: none;
+    }
+}

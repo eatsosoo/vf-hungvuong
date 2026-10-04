@@ -1,0 +1,209 @@
+@import './app.css';
+@import './promotions.css';
+@import './vehicle-colors.css';
+
+@layer base {
+    .client-shell {
+        @apply min-h-dvh bg-paper font-sans text-base leading-relaxed text-ink antialiased;
+        overflow-wrap: anywhere;
+    }
+
+    .client-shell :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+        @apply outline-2 outline-offset-4 outline-green-text;
+    }
+
+    .client-shell :is(input, select, textarea) {
+        @apply min-h-12 w-full rounded-xl border border-muted/60 bg-white px-4 py-3 text-sm text-ink;
+        @apply placeholder:text-muted focus:border-green-text disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .client-shell input[type='checkbox'] {
+        @apply size-5 min-h-0 shrink-0 accent-green-text;
+    }
+
+    .client-shell textarea {
+        @apply min-h-32 resize-y;
+    }
+
+    .client-shell [aria-invalid='true'] {
+        @apply border-red-700 bg-red-50;
+    }
+
+    .client-shell h1 {
+        @apply leading-[1.13] font-bold tracking-tight text-balance;
+        font-size: var(--type-page-title);
+    }
+
+    .client-shell h2 {
+        @apply leading-tight font-bold tracking-tight text-balance;
+        font-size: var(--type-section-title);
+    }
+
+    .client-shell h3 {
+        @apply leading-snug font-bold tracking-tight;
+        font-size: var(--type-card-title);
+    }
+
+    .client-shell :is(img, video) {
+        @apply max-w-full;
+    }
+
+    .client-shell [hidden] {
+        display: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .client-shell * {
+            transition-duration: 0s !important;
+            animation-duration: 0s !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    .client-container {
+        @apply mx-auto w-full max-w-[1260px] px-5 sm:px-8 lg:px-10;
+    }
+
+    .client-button, .client-button-secondary, .client-button-dark,
+    .client-shell .button, .client-shell form > button, .client-shell [data-load-video] {
+        @apply inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full;
+        @apply border border-transparent bg-brand px-6 py-3 text-sm font-bold text-night;
+        @apply transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .client-button.secondary, .client-button-secondary, .client-shell .button.secondary {
+        @apply border-line bg-white text-ink hover:bg-paper;
+    }
+
+    .client-button.dark, .client-button-dark {
+        @apply bg-night text-white hover:bg-ink;
+    }
+
+    .client-eyebrow {
+        @apply text-xs font-bold tracking-[0.18em] text-green-text uppercase;
+    }
+
+    .client-panel {
+        @apply min-w-0 rounded-2xl border border-line bg-white p-6 sm:p-8;
+    }
+
+    .client-header :is(a, button):focus-visible, .client-footer a:focus-visible {
+        @apply outline-brand;
+    }
+
+    .client-shell .bg-night :is(a, button, summary):focus-visible {
+        @apply outline-brand;
+    }
+
+    .client-nav-link {
+        @apply flex min-h-11 items-center rounded-xl px-3 py-2 text-sm font-semibold text-white/75;
+        @apply transition-colors hover:bg-white/5 hover:text-brand;
+    }
+
+    .client-nav-link[aria-current='page'] {
+        @apply text-brand;
+    }
+
+    .client-prose, .client-shell .prose {
+        @apply text-base leading-[1.8] text-ink;
+    }
+
+    :is(.client-prose, .client-shell .prose) :is(h2, h3, h4) {
+        @apply mt-10 mb-5 scroll-mt-8 font-bold text-ink;
+    }
+
+    :is(.client-prose, .client-shell .prose) :is(p, ul, ol, blockquote, table, figure) {
+        @apply my-6;
+    }
+
+    :is(.client-prose, .client-shell .prose) ul {
+        @apply list-disc space-y-2 pl-6;
+    }
+
+    :is(.client-prose, .client-shell .prose) ol {
+        @apply list-decimal space-y-2 pl-6;
+    }
+
+    :is(.client-prose, .client-shell .prose) a {
+        @apply font-medium text-green-text underline decoration-green-text/40 underline-offset-4;
+        @apply hover:decoration-green-text;
+    }
+
+    :is(.client-prose, .client-shell .prose) blockquote {
+        @apply rounded-r-xl border-l-4 border-brand bg-paper px-6 py-2;
+    }
+
+    :is(.client-prose, .client-shell .prose) table {
+        @apply block max-w-full overflow-x-auto rounded-xl border border-line text-base;
+    }
+
+    :is(.client-prose, .client-shell .prose) :is(th, td) {
+        @apply border-b border-line px-4 py-3 text-left;
+    }
+
+    :is(.client-prose, .client-shell .prose) th {
+        @apply bg-paper font-bold;
+    }
+
+    :is(.client-prose, .client-shell .prose) img {
+        @apply h-auto rounded-2xl;
+    }
+
+    :is(.client-prose, .client-shell .prose) pre {
+        @apply overflow-x-auto rounded-xl bg-paper p-5 text-sm;
+    }
+
+    .client-shell .honeypot {
+        @apply sr-only;
+    }
+
+    .client-shell .consent {
+        @apply mb-5 block text-sm leading-7;
+    }
+
+    .client-shell .consent a {
+        @apply text-green-text underline underline-offset-4;
+    }
+
+    .client-shell .panel > :is(h2, p) {
+        @apply mb-4;
+    }
+
+    .client-shell .card-grid {
+        @apply lg:grid-cols-3;
+    }
+
+    .client-shell .lead-text {
+        @apply my-6 max-w-3xl text-base leading-relaxed text-muted;
+    }
+
+    .client-shell .detail-image {
+        @apply my-8 max-h-[600px] w-full rounded-3xl bg-white object-contain;
+    }
+
+    .client-shell .cta-panel {
+        @apply my-10 rounded-3xl bg-night p-8 text-white;
+    }
+
+    .client-shell .cta-panel h2 {
+        @apply mb-6;
+    }
+
+    .client-shell .article-body {
+        @apply mx-auto max-w-4xl;
+    }
+
+    .client-shell .tag-list {
+        @apply my-8 flex flex-wrap gap-3 text-sm font-semibold text-green-text;
+    }
+
+    .client-shell .video-embed iframe {
+        @apply aspect-video w-full rounded-2xl border-0;
+    }
+
+    .client-shell .video-embed {
+        @apply my-6 rounded-2xl border border-line bg-paper p-5;
+    }
+}
