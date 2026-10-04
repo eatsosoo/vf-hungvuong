@@ -62,7 +62,7 @@
                         default-sort="name" default-direction="asc" />
                     <x-admin.sortable-column label="Ngày cập nhật" column="updated_at"
                         default-sort="name" default-direction="asc" />
-                    <th scope="col">Thao tác</th>
+                    <th scope="col" class="table-actions-column">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,7 +84,7 @@
                             </x-admin.badge>
                         </td>
                         <x-admin.record-dates :record="$user" />
-                        <td>
+                        <td class="table-actions-column">
                             <div class="table-row-actions">
                                 <a class="table-action" href="{{ route('admin.users.edit', $user) }}"
                                     aria-label="Sửa #{{ $user->id }}" title="Sửa">

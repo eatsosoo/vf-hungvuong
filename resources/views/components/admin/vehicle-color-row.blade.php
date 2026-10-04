@@ -8,8 +8,8 @@
             </svg>
             <strong data-color-row-title>Màu xe</strong>
         </div>
-        <button type="button" class="table-action danger" data-remove-vehicle-color
-            aria-label="Bỏ màu xe khỏi biểu mẫu" title="Bỏ màu">
+        <button type="button" class="vehicle-card-delete danger" data-remove-vehicle-color
+            aria-label="Xóa card màu xe khỏi biểu mẫu" title="Xóa card màu">
             <x-admin.icon name="trash" />
         </button>
     </div>

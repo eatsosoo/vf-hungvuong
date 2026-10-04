@@ -50,7 +50,7 @@
                         default-sort="name" default-direction="asc" />
                     <x-admin.sortable-column label="Ngày cập nhật" column="updated_at"
                         default-sort="name" default-direction="asc" />
-                    <th scope="col">Thao tác</th>
+                    <th scope="col" class="table-actions-column">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@
                                 :form="'taxonomy-update-'.$record->id" required />
                         </td>
                         <x-admin.record-dates :record="$record" />
-                        <td>
+                        <td class="table-actions-column">
                             <div class="table-row-actions">
                                 <form id="taxonomy-update-{{ $record->id }}"
                                     method="post" action="{{ route('admin.taxonomies.update', [$kind, $record->id]) }}">

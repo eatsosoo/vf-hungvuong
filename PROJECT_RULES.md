@@ -58,7 +58,9 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   tiêu đề 600–700, nhãn 500, nội dung và giá trị nhập 400. Không để giá trị nhập kế thừa độ đậm của nhãn.
 - Bảng và phân trang nằm trong cùng một khối. Danh sách bản ghi hiển thị ID, ngày tạo và ngày cập nhật;
   báo cáo tổng hợp theo ngày giữ các cột số liệu tổng hợp. Thao tác từng dòng dùng icon với nhãn ARIA,
-  tooltip và vùng bấm tối thiểu 44px; giữ nguyên kiểm tra quyền và xác nhận xóa.
+  tooltip, nút thao tác 32px và icon 16px; thiết bị cảm ứng dùng vùng bấm 44px.
+  Cột thao tác cố định ở mép phải khi cuộn ngang,
+  có nền kín và đường phân cách để không chồng chữ; giữ nguyên kiểm tra quyền và xác nhận xóa.
 - Tiêu đề từng cột dữ liệu trong bảng admin hỗ trợ sắp xếp tăng/giảm bằng thao tác nhấn;
   hiển thị chiều hiện tại bằng mũi tên và `aria-sort`. Tìm kiếm và bộ lọc nằm ở thanh công cụ trên bảng.
   Sắp xếp và lọc ở database trước khi phân trang; cột và chiều sắp xếp phải nằm trong danh sách cho phép.
@@ -79,8 +81,15 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
 - Ảnh được kiểm tra và chuyển sang WebP bằng GD, lưu trên disk local riêng tư và phục vụ qua endpoint ảnh. Chưa chốt dịch vụ lưu trữ production.
 - Mã màu xe hỗ trợ nhập HEX và color picker đồng bộ; màu nóc xe có thể để trống.
 - Danh mục xe admin hiển thị ảnh đại diện, phân khúc, số phiên bản và mẫu màu ngoại thất trong bảng.
-  Form xe nhóm thông tin, ảnh/hiển thị, phiên bản và màu. Màu được sửa theo card, có thể chọn nhiều
-  màu gợi ý để thêm cùng lúc, thêm màu riêng và bỏ từng dòng; tối đa 30 màu, lưu cùng mẫu xe trong transaction.
+  Form xe nhóm thông tin, ảnh/hiển thị, phiên bản và màu. Màu được sửa theo card, thêm từ nhiều ảnh
+  hoặc thêm màu riêng; không dùng khối chọn màu gợi ý. Tối đa 30 màu, lưu cùng mẫu xe trong transaction.
+  Có nút xóa cả nhóm ảnh đang chờ và từng nhóm màu vừa tạo; giữ các màu ngoài nhóm và ảnh trong thư viện.
+  Mỗi card ảnh đang chờ và card màu có nút xóa riêng tại góc trên, cập nhật số lượng và giữ các card còn lại.
+  Nút xóa card gọn 32px, icon 16px; thiết bị cảm ứng dùng vùng bấm 44px.
+  Card ảnh đang chờ và card màu dùng nền lime nhạt (brand 10%) để phân biệt với vùng biểu mẫu.
+  Có thể kéo thả/chọn nhiều ảnh để tạo màu: rà soát tên, HEX thân/nóc và ảnh trước khi tải tối đa 20 ảnh/lô.
+  Gợi ý màu từ tên file, không suy ra màu bằng pixel ảnh; không ghi đè màu hiện có khi trùng tên.
+  Tải qua endpoint media hiện có, tạo card và liên kết ảnh sau khi cả lô thành công; lưu xe riêng bằng nút Lưu.
   Màu gợi ý là điểm khởi đầu có thể chỉnh, không thay thế màu công bố theo từng mẫu xe.
   Giữ chỉ số dòng sau validation để lỗi gắn đúng card; chỉ bỏ dòng hoàn toàn trống, không bỏ màu nhập dở.
 - Bộ chọn ảnh admin hỗ trợ tải trực tiếp hoặc modal thư viện trực quan, tìm kiếm và phân trang toàn bộ ảnh.
@@ -90,6 +99,9 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Thư viện và modal hỗ trợ sắp xếp tên A–Z/Z–A, ngày thêm mới/cũ, cùng lựa chọn 2/3/4/6 ảnh mỗi hàng trên desktop.
 - Vai trò hiện tại: Admin quản lý toàn bộ; Manager quản lý nội dung, xe, khách và báo cáo; Sales xử lý khách được phân công; Editor viết nháp của mình, quản lý phân loại và ảnh. Chỉ Admin/Manager được xuất bản bài.
 - Local dùng MySQL `vf_studio`. Kiểm thử tự động dùng SQLite in-memory, không chạy RefreshDatabase trên database local hoặc production.
+  Seeder khách hàng mẫu chỉ chạy local/testing: 24 lái thử, 12 tư vấn, 12 báo giá, dùng xe và nhân viên hiện có.
+  Dữ liệu ghi rõ mẫu, email example.test và số điện thoại giả; đánh dấu source demo:lead để chạy lại không tạo trùng.
+  Giữ chỉnh sửa và dữ liệu hiện có; seed trực tiếp, không gửi thông báo khách mới.
 - Production phải cấu hình APP_URL đúng tên miền và dùng HTTPS; APP_DEBUG bị vô hiệu hóa ở production. Session được mã hóa, cookie HttpOnly/SameSite và Secure khi production.
 - Lịch xuất bản dùng scheduler; thông báo khách mới dùng database notification qua queue. Khi vận hành cần tiến trình scheduler và queue worker.
 - Không thêm hoặc đổi dependency, framework frontend hay cấu trúc thư mục gốc khi chưa được người dùng đồng ý.

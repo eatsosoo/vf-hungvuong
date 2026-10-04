@@ -1,6 +1,11 @@
+@php
+    $postLimit = (int) ini_parse_quantity(ini_get('post_max_size'));
+    $maxBatchBytes = $postLimit > 0 ? max(1, $postLimit - 65536) : 100 * 1024 * 1024;
+@endphp
 <dialog class="media-dialog" id="admin-media-dialog" data-media-dialog
     data-library-url="{{ route('admin.media.index') }}" data-upload-url="{{ route('admin.media.store') }}"
     data-max-file-bytes="{{ min(5 * 1024 * 1024, (int) \Illuminate\Http\UploadedFile::getMaxFilesize()) }}"
+    data-max-batch-bytes="{{ $maxBatchBytes }}"
     aria-labelledby="media-dialog-title" aria-describedby="media-dialog-description">
     <header class="media-dialog-header">
         <div>

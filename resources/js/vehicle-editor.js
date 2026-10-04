@@ -1,3 +1,5 @@
+import { setupColorImport } from './vehicle-color-import.js';
+
 const editor = document.querySelector('[data-vehicle-editor]');
 
 if (editor) {
@@ -5,10 +7,7 @@ if (editor) {
     const template = editor.querySelector('[data-vehicle-color-template]');
     const status = editor.querySelector('[data-vehicle-color-status]');
     const addBlank = editor.querySelector('[data-add-vehicle-color]');
-    const addPresets = editor.querySelector('[data-add-preset-colors]');
-    const presets = [...editor.querySelectorAll('[data-color-preset]')];
     const rows = () => [...container.querySelectorAll('[data-vehicle-color-row]')];
-    const normalize = name => name.trim().toLocaleLowerCase('vi');
     let nextIndex = Math.max(-1, ...rows().map(row =>
         Number(row.querySelector('[name]').name.match(/\[(\d+)\]/)?.[1] ?? -1)))
         + 1;
@@ -23,12 +22,11 @@ if (editor) {
         row.querySelector('[data-color-preview-roof]').setAttribute('fill',
             /^#[0-9a-f]{6}$/i.test(roof) ? roof : bodyColor);
         row.querySelector('[data-remove-vehicle-color]').setAttribute('aria-label',
-            `Bỏ ${name || 'màu mới'} khỏi biểu mẫu`);
+            `Xóa card ${name || 'màu mới'} khỏi biểu mẫu`);
     };
     const refresh = () => {
         editor.querySelector('[data-vehicle-color-count]').textContent = `${rows().length}/30 màu`;
         addBlank.disabled = rows().length >= 30;
-        addPresets.disabled = !presets.some(preset => preset.checked);
         rows().forEach(refreshRow);
     };
     const appendRow = (name = '', hex = '') => {
@@ -54,36 +52,9 @@ if (editor) {
             row.querySelector('[name$="[name]"]').focus();
         }
     });
-    addPresets.addEventListener('click', () => {
-        const existing = new Set(rows().map(row => normalize(row.querySelector('[name$="[name]"]').value)));
-        let added = 0;
-        let duplicate = 0;
-        let first;
-        presets.filter(preset => preset.checked).forEach(preset => {
-            if (existing.has(normalize(preset.dataset.name))) {
-                duplicate++;
-                preset.checked = false;
-                return;
-            }
-            const row = appendRow(preset.dataset.name, preset.dataset.hex);
-            if (!row) return;
-            existing.add(normalize(preset.dataset.name));
-            first ??= row;
-            preset.checked = false;
-            added++;
-        });
-        refresh();
-        status.textContent = `Đã thêm ${added} màu. Tất cả màu sẽ được lưu khi nhấn “Lưu mẫu xe”.`
-            + (duplicate ? ` Bỏ qua ${duplicate} màu đã có tên trùng.` : '')
-            + (presets.some(preset => preset.checked) ? ' Đã đạt giới hạn 30 màu.' : '');
-        first?.querySelector('[name$="[name]"]').focus();
-    });
     editor.addEventListener('input', event => {
         const row = event.target.closest('[data-vehicle-color-row]');
         if (row) refreshRow(row);
-    });
-    editor.addEventListener('change', event => {
-        if (event.target.matches('[data-color-preset]')) refresh();
     });
     editor.addEventListener('click', event => {
         const remove = event.target.closest('[data-remove-vehicle-color]');
@@ -96,7 +67,9 @@ if (editor) {
             (next?.querySelector('[name$="[name]"]') || addBlank).focus();
         }
         const clear = event.target.closest('[data-color-clear]');
-        if (clear) refreshRow(clear.closest('[data-vehicle-color-row]'));
+        const colorRow = clear?.closest('[data-vehicle-color-row]');
+        if (colorRow) refreshRow(colorRow);
     });
+    setupColorImport(editor, { rows, appendRow, refresh });
     refresh();
 }

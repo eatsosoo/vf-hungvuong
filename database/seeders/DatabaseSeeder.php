@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             VehicleColorSeeder::class,
             SamplePromotionSeeder::class,
             SamplePostSeeder::class,
+            SampleLeadSeeder::class,
         ]);
     }
 }

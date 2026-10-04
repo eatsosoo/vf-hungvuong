@@ -334,12 +334,22 @@
     }
 
     .admin-shell .table-action {
-        @apply inline-flex size-11 min-w-11 items-center justify-center rounded-xl border border-line;
+        @apply inline-flex size-8 min-h-8 min-w-8 items-center justify-center rounded-lg border border-line;
         @apply bg-white p-0 text-label-text no-underline transition-colors hover:bg-paper hover:text-heading;
+    }
+
+    @media (pointer: coarse) {
+        .admin-shell .table-action {
+            @apply size-11 min-h-11 min-w-11;
+        }
     }
 
     .admin-shell .table-action.danger {
         @apply border-red-200 bg-red-50 text-red-700 hover:bg-red-100;
+    }
+
+    .table-action svg {
+        @apply size-4;
     }
 
     .table-date, .table-id {
@@ -347,11 +357,11 @@
     }
 
     .table-wrap {
-        @apply my-5 overflow-x-auto rounded-2xl border border-line bg-white p-0;
+        @apply isolate my-5 overflow-x-auto rounded-2xl border border-line bg-white p-0;
     }
 
     .table-wrap > table {
-        @apply w-full min-w-[640px] border-collapse text-left text-sm font-normal text-body-text;
+        @apply w-full min-w-[640px] border-separate border-spacing-0 text-left text-sm font-normal text-body-text;
     }
 
     .table-wrap > table > thead > tr > th {
@@ -368,6 +378,19 @@
         @apply transition-colors hover:bg-paper/60;
     }
 
+    .table-wrap > table :is(th, td).table-actions-column {
+        @apply sticky right-0 z-10 w-px bg-white whitespace-nowrap;
+        box-shadow: inset 1px 0 var(--color-line), -4px 0 8px rgb(16 28 32 / 4%);
+    }
+
+    .table-wrap > table > thead > tr > .table-actions-column {
+        @apply z-20 bg-paper;
+    }
+
+    .table-wrap > table > tbody > tr:hover > .table-actions-column {
+        background-color: color-mix(in srgb, var(--color-paper) 60%, white);
+    }
+
     .table-wrap > table > tbody > tr:last-child > td {
         @apply border-b-0;
     }
@@ -376,7 +399,7 @@
         @apply mt-1 text-xs;
     }
 
-    .table-wrap > table > tbody > tr > td a {
+    .table-wrap > table > tbody > tr > td a:not(.table-action) {
         @apply inline-flex min-h-11 items-center;
     }
 
@@ -629,37 +652,30 @@
         @apply xl:col-span-2;
     }
 
-    .vehicle-color-presets {
-        @apply rounded-xl border border-line bg-paper p-4 sm:p-5;
-    }
-
-    .vehicle-color-presets legend {
-        @apply px-2 font-semibold text-heading;
-    }
-
-    .vehicle-color-preset-grid {
-        @apply grid grid-cols-2 gap-2 sm:grid-cols-4 2xl:grid-cols-8;
-    }
-
-    .vehicle-color-preset {
-        @apply flex min-h-11 cursor-pointer items-center gap-2 rounded-xl border border-line bg-white p-3 text-sm;
-        @apply transition-colors hover:border-green-text has-[:checked]:border-green-text has-[:checked]:bg-brand/15;
-    }
-
-    .vehicle-color-preset svg {
-        @apply size-6 shrink-0;
-    }
-
     .vehicle-color-editor-grid {
         @apply grid gap-4 md:grid-cols-2 2xl:grid-cols-3;
     }
 
     .vehicle-color-card {
-        @apply min-w-0 rounded-2xl border border-line bg-white p-4 sm:p-5;
+        @apply min-w-0 rounded-2xl border border-line bg-brand/10 p-4 sm:p-5;
     }
 
     .vehicle-color-card-heading {
         @apply mb-4 flex items-center justify-between gap-3 border-b border-line pb-3;
+    }
+
+    .admin-shell .vehicle-card-delete {
+        @apply size-8 min-h-8 min-w-8 rounded-lg p-0;
+    }
+
+    .vehicle-card-delete svg {
+        @apply size-4;
+    }
+
+    @media (pointer: coarse) {
+        .admin-shell .vehicle-card-delete {
+            @apply size-11 min-h-11 min-w-11;
+        }
     }
 
     .vehicle-admin-swatch {
@@ -705,4 +721,54 @@
     .vehicle-catalog-colors svg {
         @apply size-5 shrink-0 rounded-full border border-line;
     }
+
+    .vehicle-color-import {
+        @apply mb-6 rounded-2xl border border-line bg-paper p-4 sm:p-5;
+    }
+
+    .vehicle-color-import h3 {
+        @apply mb-2 text-xl font-semibold text-heading;
+    }
+
+    .vehicle-color-dropzone {
+        @apply flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-line bg-white p-6 text-center;
+        @apply text-sm transition-colors focus-within:border-green-text;
+    }
+
+    .vehicle-color-dropzone[data-dragging="true"] {
+        @apply border-green-text bg-brand/15;
+    }
+
+    .vehicle-color-dropzone > svg {
+        @apply size-6 text-green-text;
+    }
+
+    .vehicle-color-import-grid {
+        @apply mt-4 grid gap-4 md:grid-cols-2 2xl:grid-cols-3;
+    }
+
+    .vehicle-color-import-item {
+        @apply min-w-0 rounded-xl border border-line bg-brand/10 p-4;
+    }
+
+    .vehicle-color-import-item > img {
+        @apply mb-3 h-36 w-full rounded-lg bg-paper object-contain;
+    }
+
+    .vehicle-color-import-heading {
+        @apply mb-3 flex items-center justify-between gap-3;
+    }
+
+    .vehicle-color-import-heading > strong {
+        @apply min-w-0 flex-1 truncate text-sm;
+    }
+
+    .vehicle-color-import-item .field {
+        @apply mb-3;
+    }
+
+    .vehicle-color-import-item [data-import-error] {
+        @apply mb-3 block text-sm text-red-800;
+    }
+
 }

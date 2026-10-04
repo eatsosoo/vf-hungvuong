@@ -6,10 +6,6 @@
             ? json_encode($vehicle->specifications, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null;
         $colorRows = old('colors', $vehicle->colors->toArray() ?: [['name' => '', 'hex' => '', 'media_id' => '']]);
         $colorRows = is_array($colorRows) ? $colorRows : [];
-        $suggestedColors = [
-            ['Trắng', '#ffffff'], ['Đen', '#171717'], ['Xám', '#808080'], ['Bạc', '#c0c0c0'],
-            ['Đỏ', '#b91c1c'], ['Xanh dương', '#2563eb'], ['Xanh lá', '#166534'], ['Cam', '#ea580c'],
-        ];
     @endphp
     <x-admin.page-heading :title="$vehicle->exists ? 'Chỉnh sửa xe' : 'Thêm mẫu xe'"
         description="Quản lý thông tin, phiên bản và nhiều màu xe trong một lần lưu.">
@@ -69,29 +65,38 @@
                 </div>
                 <span class="badge" data-vehicle-color-count>{{ count($colorRows) }}/30 màu</span>
             </div>
-            <fieldset class="vehicle-color-presets">
-                <legend>Thêm nhanh nhiều màu</legend>
-                <p class="text-sm text-muted">Chọn các màu gợi ý rồi chỉnh tên, mã màu và ảnh theo xe thực tế.</p>
-                <div class="vehicle-color-preset-grid">
-                    @foreach($suggestedColors as [$name, $hex])
-                        <label class="vehicle-color-preset">
-                            <input type="checkbox" data-color-preset data-name="{{ $name }}" data-hex="{{ $hex }}">
-                            <svg viewBox="0 0 32 32" aria-hidden="true">
-                                <circle cx="16" cy="16" r="15" fill="{{ $hex }}" stroke="#dee4df" />
-                            </svg>
-                            <span>{{ $name }}</span>
-                        </label>
-                    @endforeach
+            <section class="vehicle-color-import" data-color-import hidden aria-labelledby="color-import-heading">
+                <h3 id="color-import-heading">Thêm màu từ nhiều ảnh</h3>
+                <p class="section-description">
+                    Tên file như vf7-trang.webp hoặc vf7-red-black.webp giúp gợi ý màu thân và nóc.
+                    Kiểm tra tên, mã màu trước khi tạo; mã gợi ý có thể chỉnh theo xe thực tế.
+                </p>
+                <div class="vehicle-color-dropzone" data-color-dropzone>
+                    <x-admin.icon name="plus" />
+                    <strong>Kéo thả ảnh xe vào đây</strong>
+                    <span>hoặc chọn nhiều ảnh JPG, PNG, WebP; tối đa 20 ảnh mỗi lần.</span>
+                    <input type="file" id="vehicle-color-files" data-color-files multiple
+                        accept="image/jpeg,image/png,image/webp" class="sr-only"
+                        aria-label="Chọn nhiều ảnh để tạo màu xe" aria-describedby="color-import-limits">
+                    <button type="button" class="secondary" data-color-files-open>Chọn nhiều ảnh</button>
                 </div>
-                <div class="actions mt-4">
-                    <button type="button" data-add-preset-colors>
-                        <x-admin.icon name="plus" />Thêm màu đã chọn
-                    </button>
-                    <button type="button" class="secondary" data-add-vehicle-color>
-                        <x-admin.icon name="plus" />Thêm màu khác
+                <p class="field-hint" id="color-import-limits" data-color-import-limits></p>
+                <div class="vehicle-color-import-grid" data-color-import-queue></div>
+                <template data-color-import-delete-icon><x-admin.icon name="trash" /></template>
+                <div class="actions mt-4" data-color-import-actions hidden>
+                    <button type="button" data-color-import-submit>Tạo màu từ ảnh đã chọn</button>
+                    <button type="button" class="danger" data-color-import-clear>
+                        <x-admin.icon name="trash" />Xóa nhóm ảnh đã chọn
                     </button>
                 </div>
-            </fieldset>
+                <p class="field-hint mt-2 ml-2" data-color-import-status role="status" aria-live="polite"></p>
+            </section>
+            <div class="actions">
+                <button type="button" class="secondary" data-add-vehicle-color>
+                    <x-admin.icon name="plus" />Thêm màu riêng
+                </button>
+            </div>
+            <div class="actions mt-4" data-color-import-groups hidden></div>
             <p class="vehicle-color-editor-status" data-vehicle-color-status role="status" aria-live="polite"></p>
             <input type="hidden" name="colors" value="">
             <div class="vehicle-color-editor-grid" data-vehicle-color-rows>

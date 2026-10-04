@@ -105,7 +105,7 @@
                         default-sort="created_at" default-direction="desc" />
                     <x-admin.sortable-column label="Ngày cập nhật" column="updated_at"
                         default-sort="created_at" default-direction="desc" />
-                    <th scope="col">Thao tác</th>
+                    <th scope="col" class="table-actions-column">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,7 +138,7 @@
                             ->format('d/m/Y H:i') }}
                         </td>
                         <x-admin.record-dates :record="$lead" />
-                        <td>
+                        <td class="table-actions-column">
                             <div class="table-row-actions">
                                 <a class="table-action" href="{{ route('admin.leads.edit', $lead) }}"
                                     aria-label="Xử lý #{{ $lead->id }}" title="Xử lý">

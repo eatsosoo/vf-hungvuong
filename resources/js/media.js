@@ -61,13 +61,13 @@ const node = (tag, className, text) => {
     }
     return element;
 };
-const showFilePreview = (file, image) => {
+export const showFilePreview = (file, image) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => { image.src = reader.result; });
     reader.addEventListener('error', () => { image.alt = 'Không thể xem trước ảnh này.'; });
     reader.readAsDataURL(file);
 };
-const checkFile = (file, maxBytes = 5 * 1024 * 1024) => {
+export const checkFile = (file, maxBytes = 5 * 1024 * 1024) => {
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
         return `${file.name}: chỉ nhận JPG, PNG hoặc WebP.`;
     }
@@ -76,16 +76,18 @@ const checkFile = (file, maxBytes = 5 * 1024 * 1024) => {
     }
     return null;
 };
-const requestJson = async (url, options = {}) => {
+export const requestJson = async (url, options = {}) => {
     const response = await fetch(url, {
         ...options,
         headers: { Accept: 'application/json', ...options.headers },
         credentials: 'same-origin',
     });
-    const data = await response.json();
-    if (!response.ok) {
-        const messages = Object.values(data.errors ?? {}).flat();
-        throw new Error(messages.join(' ') || 'Không thể xử lý yêu cầu. Kiểm tra quyền truy cập và thử lại.');
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data) {
+        const messages = Object.values(data?.errors ?? {}).flat();
+        const fallback = response.status === 413 ? 'Ảnh vượt giới hạn tải của máy chủ. Giảm số ảnh hoặc dung lượng.'
+            : 'Không thể xử lý yêu cầu. Kiểm tra quyền truy cập và thử lại.';
+        throw new Error(messages.join(' ') || fallback);
     }
     return data;
 };
@@ -187,6 +189,23 @@ if (batchForm) {
     render();
 }
 
+export const applyMedia = (picker, media) => {
+    picker.querySelector('[data-media-value]').value = media?.id ?? '';
+    const image = picker.querySelector('[data-media-preview]');
+    image.hidden = !media;
+    if (media) {
+        image.src = media.url;
+        image.alt = media.alt || media.original_name;
+    } else {
+        image.removeAttribute('src');
+    }
+    picker.querySelector('[data-media-name]').textContent = media?.original_name || 'Chưa chọn ảnh';
+    picker.querySelector('[data-media-description]').textContent
+        = media?.alt || 'Tải ảnh mới hoặc chọn từ thư viện.';
+    picker.querySelector('[data-media-clear]').hidden = !media;
+    picker.querySelector('[data-media-open]').setAttribute('aria-invalid', 'false');
+};
+
 const dialog = document.querySelector('[data-media-dialog]');
 if (dialog) {
     const searchForm = dialog.querySelector('[data-media-search]');
@@ -199,22 +218,6 @@ if (dialog) {
     let currentPage = 1;
     let lastPage = 1;
     let pendingRequest = null;
-    const applyMedia = (picker, media) => {
-        picker.querySelector('[data-media-value]').value = media?.id ?? '';
-        const image = picker.querySelector('[data-media-preview]');
-        image.hidden = !media;
-        if (media) {
-            image.src = media.url;
-            image.alt = media.alt || media.original_name;
-        } else {
-            image.removeAttribute('src');
-        }
-        picker.querySelector('[data-media-name]').textContent = media?.original_name || 'Chưa chọn ảnh';
-        picker.querySelector('[data-media-description]').textContent
-            = media?.alt || 'Tải ảnh mới hoặc chọn từ thư viện.';
-        picker.querySelector('[data-media-clear]').hidden = !media;
-        picker.querySelector('[data-media-open]').setAttribute('aria-invalid', 'false');
-    };
     const loadLibrary = async (page = 1) => {
         pendingRequest?.abort();
         const controller = new AbortController();

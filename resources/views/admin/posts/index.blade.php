@@ -92,7 +92,7 @@
                             default-sort="created_at" default-direction="desc" />
                         <x-admin.sortable-column label="Ngày cập nhật" column="updated_at"
                             default-sort="created_at" default-direction="desc" />
-                        <th scope="col">
+                        <th scope="col" class="table-actions-column">
                             Thao tác
                         </th>
                     </tr>
@@ -141,7 +141,7 @@
                                 </x-admin.badge>
                             </td>
                             <x-admin.record-dates :record="$post" />
-                            <td>
+                            <td class="table-actions-column">
                                 <div class="table-row-actions">
                                     @can('update', $post)
                                         <a class="table-action" href="{{ route('admin.posts.edit', $post) }}"
