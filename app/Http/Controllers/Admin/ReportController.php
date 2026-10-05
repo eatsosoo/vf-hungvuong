@@ -36,6 +36,7 @@ class ReportController extends Controller
         $won = (clone $query)->where('status', 'won')->count();
         $daily = (clone $query)->selectRaw('DATE(created_at) as day, COUNT(*) as total')
             ->groupByRaw('DATE(created_at)');
+        $chartDaily = (clone $daily)->orderBy('day')->get();
         foreach (['total_min' => '>=', 'total_max' => '<='] as $key => $operator) {
             if (isset($data[$key])) {
                 $daily->havingRaw('COUNT(*) '.$operator.' ?', [(int) $data[$key]]);
@@ -48,6 +49,7 @@ class ReportController extends Controller
         }
 
         return view('admin.reports.index', ['total' => $total, 'won' => $won,
+            'chartDaily' => $chartDaily,
             'conversion' => $total ? round($won * 100 / $total, 1) : 0,
             'daily' => $daily->paginate((int) ($data['per_page'] ?? 20))->withQueryString(),
             'sources' => (clone $query)->selectRaw('source, COUNT(*) as total')->groupBy('source')->get(),

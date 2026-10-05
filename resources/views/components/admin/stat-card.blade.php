@@ -1,8 +1,8 @@
-@props(['label', 'value', 'icon' => 'chart', 'href' => null])
+@props(['label', 'value', 'icon' => 'chart', 'href' => null, 'tone' => 'neutral'])
 @if($href)
-    <a class="stat-card" href="{{ $href }}">
+    <a class="stat-card" data-tone="{{ $tone }}" href="{{ $href }}">
 @else
-    <article class="stat-card">
+    <article class="stat-card" data-tone="{{ $tone }}">
 @endif
     <div class="flex items-start justify-between gap-3">
         <span class="text-sm font-medium text-muted">{{ $label }}</span>

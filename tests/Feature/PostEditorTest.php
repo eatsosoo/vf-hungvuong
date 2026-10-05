@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Media;
+use App\Models\Page;
 use App\Models\Post;
+use App\Models\Promotion;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -13,6 +15,35 @@ use Tests\TestCase;
 class PostEditorTest extends TestCase
 {
     use LazilyRefreshDatabase;
+
+    public function test_catalog_forms_reuse_the_editor_with_separate_recovery_keys_and_keep_old_content(): void
+    {
+        $this->withoutVite();
+        $manager = User::factory()->manager()->create();
+        $this->actingAs($manager);
+
+        foreach (['pages' => Page::class, 'promotions' => Promotion::class] as $resource => $modelClass) {
+            $scope = $resource === 'pages' ? 'page' : 'promotion';
+            $record = $modelClass::factory()->create(['body' => '## Nội dung đã lưu']);
+
+            $this->get(route('admin.'.$resource.'.create'))->assertOk()
+                ->assertSee('data-post-editor', false)
+                ->assertSee('data-draft-key="vf-'.$scope.'-draft-'.$manager->id.'-new"', false);
+            $this->get(route('admin.'.$resource.'.edit', $record))->assertOk()
+                ->assertSee('## Nội dung đã lưu')
+                ->assertSee('data-draft-key="vf-'.$scope.'-draft-'.$manager->id.'-'.$record->id.'"', false)
+                ->assertSee('data-editor-dialog="image"', false)
+                ->assertSee(route('admin.posts.analyze'), false);
+
+            $editUrl = route('admin.'.$resource.'.edit', $record);
+            $this->from($editUrl)->put(route('admin.'.$resource.'.update', $record), [
+                'title' => '', 'slug' => $record->slug, 'body' => '## Nội dung chưa lưu', 'is_active' => '1',
+            ])->assertSessionHasErrors('title')->assertRedirect($editUrl);
+            $this->get($editUrl)->assertOk()->assertSee('## Nội dung chưa lưu');
+            $this->assertSame('## Nội dung đã lưu', $record->fresh()->body);
+            session()->forget('_old_input');
+        }
+    }
 
     public function test_analysis_requires_an_active_content_role(): void
     {

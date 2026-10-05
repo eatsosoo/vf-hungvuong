@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title', 'Khuyến mãi')
+@push('assets')
+    @vite(['resources/css/editor.css', 'resources/js/editor.js'])
+@endpush
 @section('content')
     @php
         $formAction = $record->exists
@@ -54,16 +57,9 @@
                 <p class="section-description">
                     Trình bày quyền lợi, điều kiện và cách khách hàng nhận ưu đãi.
                 </p>
-                <x-field
-                    name="body"
+                <x-admin.post-editor :record="$record" :media="$media" scope="promotion"
                     label="Nội dung chương trình"
-                    type="textarea"
-                    class="promotion-body"
-                    :value="$record->body"
-                    :rows="12"
-                    hint="Hỗ trợ Markdown: ## cho tiêu đề, **chữ đậm** và - cho danh sách."
-                    required
-                />
+                    placeholder="Trình bày quyền lợi, điều kiện và cách nhận ưu đãi…" />
             </section>
             <fieldset
                 class="panel form-section"
@@ -160,4 +156,5 @@
             </div>
         </div>
     </form>
+    @stack('editor-dialogs')
 @endsection

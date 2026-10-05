@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageRequest;
 use App\Models\Media;
 use App\Models\Page;
-use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -78,16 +77,10 @@ class PageController extends Controller
 
     private function form(Page $record): View
     {
-        return view('admin.records.form', ['record' => $record, 'resource' => 'pages', 'title' => 'Trang nội dung',
-            'fields' => ['title',
-                'slug',
-                'body',
-                'seo_title',
-                'seo_description',
-                'is_active'],
+        return view('admin.pages.form', [
+            'record' => $record,
             'media' => Media::query()->latest()->limit(100)->get(),
-            'vehicles' => Vehicle::query()->orderBy('name')->get(),
-            'selectedVehicles' => []]);
+        ]);
     }
 
     public function store(PageRequest $request): RedirectResponse

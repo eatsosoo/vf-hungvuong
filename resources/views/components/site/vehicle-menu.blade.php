@@ -48,9 +48,6 @@
                         <p>{{ __('Thông tin xe đang được cập nhật.') }}</p>
                     @endforelse
                 </div>
-                <button class="vehicle-menu-close" type="button" data-vehicle-menu-close>
-                    {{ __('Đóng') }} <span aria-hidden="true">×</span>
-                </button>
             </div>
         </div>
     </section>

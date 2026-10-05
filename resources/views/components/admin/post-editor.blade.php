@@ -1,5 +1,9 @@
-@props(['post', 'media'])
+@props([
+    'post' => null, 'record' => null, 'media', 'scope' => 'post',
+    'label' => 'Nội dung bài viết', 'placeholder' => 'Bắt đầu bài viết bằng vấn đề người đọc đang quan tâm…',
+])
 @php
+    $contentRecord = $record ?? $post;
     $tools = [
         ['bold', 'In đậm (Ctrl/Cmd+B)', 'bold'],
         ['italic', 'In nghiêng (Ctrl/Cmd+I)', 'italic'],
@@ -19,9 +23,11 @@
     ];
 @endphp
 <div class="post-editor" data-post-editor data-analysis-url="{{ route('admin.posts.analyze') }}"
-    data-pending-key="vf-post-pending-{{ auth()->id() }}"
+    data-placeholder="{{ $placeholder }}"
+    data-pending-key="vf-{{ $scope }}-pending-{{ auth()->id() }}"
+    data-draft-prefix="vf-{{ $scope }}-draft-{{ auth()->id() }}-"
     data-save-succeeded="{{ session()->has('success') ? 'true' : 'false' }}"
-    data-draft-key="vf-post-draft-{{ auth()->id() }}-{{ $post->id ?? 'new' }}">
+    data-draft-key="vf-{{ $scope }}-draft-{{ auth()->id() }}-{{ $contentRecord->id ?? 'new' }}">
     <div class="editor-recovery" data-draft-recovery hidden>
         <p>Có nội dung chưa lưu trong phiên làm việc này.</p>
         <div class="actions">
@@ -31,7 +37,7 @@
     </div>
     <div class="editor-heading">
         <div>
-            <label class="field-label" id="editor-body-label" for="field-body">Nội dung bài viết</label>
+            <label class="field-label" id="editor-body-label" for="field-body">{{ $label }}</label>
             <p class="field-hint mt-1" id="editor-body-hint">Soạn trực quan hoặc chuyển sang Markdown khi cần.</p>
         </div>
         <div class="flex flex-wrap gap-2">
@@ -82,8 +88,8 @@
     </div>
     <div class="editor-canvas" data-editor-canvas></div>
     <div data-editor-markdown>
-        <x-field name="body" label="Nội dung Markdown" type="textarea" :value="$post->body"
-            :rows="18" required hint="Nội dung được lưu khi bạn nhấn Lưu bài viết." />
+        <x-field name="body" label="Nội dung Markdown" type="textarea" :value="$contentRecord->body"
+            :rows="18" required hint="Nội dung được lưu khi bạn nhấn nút Lưu." />
     </div>
     <div class="editor-preview prose" data-editor-rendered hidden aria-label="Xem trước nội dung"></div>
     <div class="editor-footer">
@@ -120,7 +126,7 @@
     </dialog>
     <dialog class="editor-dialog editor-media-dialog" data-editor-dialog="image" aria-labelledby="editor-image-title">
         <div class="editor-dialog-heading">
-            <h2 id="editor-image-title">Chèn ảnh vào bài viết</h2>
+            <h2 id="editor-image-title">Chèn ảnh vào nội dung</h2>
             <button type="button" class="editor-mode" data-close-dialog aria-label="Đóng hộp thoại">
                 <x-admin.icon name="close" />
             </button>

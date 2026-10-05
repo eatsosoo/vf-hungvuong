@@ -294,6 +294,141 @@
         @apply block min-w-0 rounded-2xl border border-line bg-white p-6;
     }
 
+    .stat-card[data-tone='info'] {
+        @apply border-sky-100 bg-sky-50;
+    }
+
+    .stat-card[data-tone='success'] {
+        @apply border-emerald-100 bg-emerald-50;
+    }
+
+    .stat-card[data-tone='violet'] {
+        @apply border-violet-100 bg-violet-50;
+    }
+
+    .stat-card[data-tone='info'] .stat {
+        @apply text-sky-900;
+    }
+
+    .stat-card[data-tone='success'] .stat {
+        @apply text-emerald-900;
+    }
+
+    .stat-card[data-tone='violet'] .stat {
+        @apply text-violet-900;
+    }
+
+    .report-breakdowns {
+        @apply my-6 grid items-start gap-6 xl:grid-cols-2;
+    }
+
+    .report-breakdowns .panel {
+        @apply my-0 min-w-0;
+    }
+
+    .report-list {
+        @apply max-h-80 overflow-y-auto overscroll-contain pr-2;
+        scrollbar-gutter: stable;
+    }
+
+    .report-list dl {
+        @apply divide-y divide-line;
+    }
+
+    .report-list dl > div {
+        @apply flex items-center justify-between gap-4 py-3;
+    }
+
+    .report-list dt {
+        @apply min-w-0 break-words text-sm;
+    }
+
+    .report-list dd {
+        @apply shrink-0 rounded-lg bg-paper px-3 py-1.5 text-sm font-semibold text-ink tabular-nums;
+    }
+
+    .report-status {
+        @apply flex items-center justify-between gap-4 rounded-xl border border-line bg-paper p-4 text-sm;
+    }
+
+    .report-status[data-tone='success'] {
+        @apply border-emerald-100 bg-emerald-50 text-emerald-900;
+    }
+
+    .report-status[data-tone='info'] {
+        @apply border-sky-100 bg-sky-50 text-sky-900;
+    }
+
+    .report-status[data-tone='warning'] {
+        @apply border-amber-100 bg-amber-50 text-amber-900;
+    }
+
+    .report-status[data-tone='muted'] {
+        @apply border-rose-100 bg-rose-50 text-rose-900;
+    }
+
+    .report-table .table-wrap {
+        @apply max-h-96 overflow-auto overscroll-contain;
+    }
+
+    .daily-lead-chart {
+        @apply mt-6 min-w-0 rounded-xl;
+    }
+
+    .daily-chart-plot {
+        @apply relative pl-10;
+    }
+
+    .daily-chart-plot svg {
+        @apply block h-64 w-full overflow-visible sm:h-80;
+    }
+
+    .daily-chart-y-axis {
+        @apply absolute inset-y-[7.14%] left-0 flex w-8 flex-col justify-between text-right text-xs text-muted;
+    }
+
+    .daily-chart-grid {
+        stroke: var(--color-line);
+        stroke-dasharray: 4 5;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .daily-chart-area {
+        @apply fill-sky-100/70;
+    }
+
+    .daily-chart-line {
+        @apply fill-none stroke-sky-700;
+        stroke-width: 2.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+    }
+
+    .daily-chart-point {
+        @apply fill-white stroke-sky-700;
+        stroke-width: 2;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .daily-chart-cursor {
+        @apply stroke-sky-400;
+        stroke-dasharray: 4 4;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .daily-chart-x-axis {
+        @apply flex justify-between gap-3 pl-10 text-xs text-muted;
+    }
+
+    .daily-chart-value {
+        @apply mt-5 flex min-h-10 items-center justify-center gap-2 rounded-xl bg-sky-50 px-3 py-2;
+        @apply text-sm font-medium text-sky-900;
+    }
+
+    .report-table .table-wrap > table > thead > tr > th {
+        @apply sticky top-0 z-10 bg-paper;
+    }
+
     a.stat-card {
         @apply transition-colors hover:border-green-text;
     }
@@ -498,15 +633,15 @@
         @apply px-1;
     }
 
-    .promotion-layout {
+    .promotion-layout, .content-layout {
         @apply grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem];
     }
 
-    .promotion-main, .promotion-side {
+    .promotion-main, .promotion-side, .content-main, .content-side {
         @apply grid min-w-0 gap-6;
     }
 
-    .promotion-layout .panel {
+    .promotion-layout .panel, .content-layout .panel {
         @apply my-0;
     }
 
@@ -569,7 +704,7 @@
         @apply mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-white p-5;
     }
 
-    .promotion-layout .form-footer {
+    .promotion-layout .form-footer, .content-layout .form-footer {
         @apply xl:col-span-2;
     }
 

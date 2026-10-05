@@ -4,6 +4,7 @@ import './select.js';
 import './slug.js';
 import './vehicle-editor.js';
 import './admin-drawer.js';
+import './daily-lead-chart.js';
 
 document.querySelectorAll('[data-page-size-form]').forEach(form => {
     const select = form.querySelector('[data-page-size]');

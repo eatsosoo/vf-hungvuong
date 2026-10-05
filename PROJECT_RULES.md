@@ -41,7 +41,8 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   bảng chọn màu trải hết chiều rộng vùng giới thiệu xe, nằm dưới ảnh và nội dung; các nút màu căn giữa.
   ảnh hiện tại trượt ra và mờ dần, ảnh màu mới trượt vào và rõ dần theo thứ tự màu;
   chiều trượt theo phím trái/phải khi dùng bàn phím.
-  Nền ảnh xe dùng nền than của trang, không thêm lớp ánh sáng xanh.
+  Hero và thanh điều hướng trang chi tiết xe dùng liền một ảnh nền gara tối tại
+  `public/assets/vinfast/vehicle-garage-hero-v1.webp`, có lớp phủ than để chữ dễ đọc, không thêm ánh sáng xanh.
   Khi mở trang, ảnh xe trượt từ phải sang trái trong 850ms; tiêu đề và nội dung giới thiệu căn đầu dòng.
   Giảm chuyển động chỉ tắt hiệu ứng vào trang; carousel vẫn chạy khi người dùng chủ động chọn màu.
   Chọn màu mới hủy hiệu ứng vào trang đang chạy và chuyển sang màu được chọn gần nhất.
@@ -87,6 +88,12 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Cột thao tác và checkbox hàng loạt không có sort; thư viện ảnh giữ phân trang 24 ảnh theo bố cục riêng.
 - Form khuyến mãi nhóm thông tin, nội dung và xe áp dụng ở cột chính; thời gian, hiển thị và ảnh ở cột phụ.
   Màn hình nhỏ xếp một cột. Chọn nhiều xe bằng checkbox, giữ cả trạng thái bỏ chọn toàn bộ sau validation lỗi.
+- Form tạo/sửa trang nội dung nhóm tiêu đề, đường dẫn và editor ở cột chính; hiển thị và SEO ở cột phụ.
+  Trang nội dung và khuyến mãi dùng lại editor Tiptap của bài viết, lưu Markdown và tách khóa khôi phục theo loại nội dung.
+- Báo cáo dùng màu pastel cho các thẻ tổng hợp và trạng thái; danh sách nguồn khách và mẫu xe có vùng cuộn riêng,
+  khách theo ngày hiển thị bằng biểu đồ đường SVG trên toàn bộ khoảng lọc, ngày không có khách về 0;
+  hỗ trợ chuột, cảm ứng và bàn phím. Bảng theo ngày thu gọn để tra cứu, giới hạn chiều cao,
+  giữ tiêu đề khi cuộn và phân trang bên ngoài vùng cuộn. Lọc số khách chỉ áp dụng cho bảng chi tiết.
 - Admin dùng controller, Form Request, Policy và Blade của Laravel; phân quyền bằng Enum vai trò, Gate và Policy, không thêm package admin.
   Thêm/sửa tài khoản và phân loại bài viết dùng drawer bên phải trên trang danh sách;
   giữ bộ lọc, dữ liệu nhập và lỗi validation. Danh mục có bài viết ở bất kỳ trạng thái nào không được xóa;

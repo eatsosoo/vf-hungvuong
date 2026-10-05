@@ -59,7 +59,7 @@
         @vite(['resources/css/language-switcher.css', 'resources/css/site-navbar.css'])
         @yield('head')
     </head>
-    <body class="client-shell">
+    <body class="client-shell @yield('body_class')">
         <a
             class="sr-only fixed top-4 left-4 z-50 rounded-xl bg-brand px-5 py-3 font-bold
                 text-night focus:not-sr-only focus:fixed"

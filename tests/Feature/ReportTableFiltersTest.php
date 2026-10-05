@@ -9,12 +9,43 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ReportTableFiltersTest extends TestCase
 {
     use LazilyRefreshDatabase;
+
+    public function test_daily_chart_covers_the_full_date_range_independently_of_table_filters_and_pagination(): void
+    {
+        $this->actingAs(User::factory()->manager()->createQuietly());
+        Lead::factory()->create(['created_at' => '2026-10-02 12:00:00']);
+        Lead::factory()->count(3)->create(['created_at' => '2026-10-04 12:00:00']);
+        Lead::factory()->create(['created_at' => '2026-09-30 12:00:00']);
+
+        $response = $this->get(route('admin.reports.index', [
+            'from' => '2026-10-01', 'to' => '2026-10-05', 'total_min' => '3',
+            'sort' => 'total', 'direction' => 'desc', 'per_page' => '10', 'page' => '2',
+        ]))->assertOk()->assertViewHas('total', 4)
+            ->assertViewHas('chartDaily', function (Collection $rows): bool {
+                return $rows->pluck('day')->all() === ['2026-10-02', '2026-10-04']
+                    && $rows->pluck('total')->map(fn (mixed $total): int => (int) $total)->all() === [1, 3];
+            });
+
+        $document = new \DOMDocument;
+        @$document->loadHTML($response->getContent());
+        $xpath = new \DOMXPath($document);
+        $chart = $xpath->query('//*[@data-daily-chart]')->item(0);
+        $this->assertNotNull($chart);
+        $this->assertSame([
+            '2026-10-01' => 0, '2026-10-02' => 1, '2026-10-04' => 3, '2026-10-05' => 0,
+        ], json_decode($chart->getAttribute('data-values'), true));
+        $line = $xpath->query('//*[contains(@class, "daily-chart-line")]')->item(0);
+        $points = array_map(fn (string $point): array => array_map('floatval', explode(',', $point)),
+            explode(' ', $line->getAttribute('points')));
+        $this->assertSame([480.0, 260.0], $points[2]);
+    }
 
     public function test_audit_filters_every_column_and_combines_filters(): void
     {

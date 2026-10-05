@@ -1,9 +1,12 @@
 @extends('layouts.admin')
 @section('title', $title)
 @section('content')
-    <x-admin.page-heading :title="$title" description="Quản lý nội dung và sắp xếp danh sách theo từng cột.">
+    <x-admin.page-heading :title="$title"
+        :description="$resource === 'pages'
+            ? 'Quản lý các trang giới thiệu, chính sách và thông tin hiển thị trên website.'
+            : 'Quản lý nội dung và sắp xếp danh sách theo từng cột.'">
         <a class="button" href="{{ route('admin.'.$resource.'.create') }}">
-            Thêm mới
+            <x-admin.icon name="plus" />{{ $resource === 'pages' ? 'Tạo trang nội dung' : 'Thêm mới' }}
         </a>
     </x-admin.page-heading>
     <form id="table-filters" class="table-toolbar" method="get" action="{{ route('admin.'.$resource.'.index') }}">
@@ -23,7 +26,7 @@
                 <input type="hidden" name="{{ $sortParameter }}" value="{{ request($sortParameter) }}">
             @endif
         @endforeach
-        <details class="table-filter-options">
+        <details class="table-filter-options" @if($resource === 'pages') open @endif>
             <summary>Tìm kiếm và bộ lọc</summary>
             <div class="table-filter-grid">
                 <x-field name="q" label="Lọc tên" :value="request('q')" :use-old="false" form="table-filters" />
@@ -67,9 +70,18 @@
                             <a class="table-title" href="{{ route('admin.'.$resource.'.edit', $record) }}">
                                 {{ $record->name ?? $record->title }}
                             </a>
+                            @if($resource === 'pages' && $record->seo_description)
+                                <p class="mt-1 max-w-md text-xs leading-5 text-muted">
+                                    {{ Str::limit($record->seo_description, 100) }}
+                                </p>
+                            @endif
                         </td>
                         <td class="table-secondary">
-                            {{ $record->slug }}
+                            @if($resource === 'pages')
+                                <span class="rounded-lg bg-paper px-2 py-1 text-xs">/trang/{{ $record->slug }}</span>
+                            @else
+                                {{ $record->slug }}
+                            @endif
                         </td>
                         <td>
                             <x-admin.badge :tone="$record->is_active ? 'success' : 'neutral'">

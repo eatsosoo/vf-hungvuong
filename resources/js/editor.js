@@ -7,7 +7,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { syncSelects } from './select.js';
 
 const root = document.querySelector('[data-post-editor]');
-const form = document.querySelector('[data-post-form]');
+const form = root?.closest('form');
 
 if (root && form) {
     const body = form.elements.namedItem('body');
@@ -65,16 +65,18 @@ if (root && form) {
                 draftStatus.textContent = message;
             }
         } catch {
-            draftStatus.textContent = 'Trình duyệt không thể giữ bản khôi phục. Hãy lưu bài thường xuyên.';
+            draftStatus.textContent = 'Trình duyệt không thể giữ bản khôi phục. Hãy lưu nội dung thường xuyên.';
         }
     };
 
     const paintAssessment = assessment => {
         const section = document.querySelector('[data-seo-assessment]');
-        section.querySelector('[data-score-value]').textContent = assessment.score;
-        section.querySelector('[data-score-label]').textContent = assessment.label;
+        if (section) {
+            section.querySelector('[data-score-value]').textContent = assessment.score;
+            section.querySelector('[data-score-label]').textContent = assessment.label;
+        }
         assessment.checks.forEach(check => {
-            const item = section.querySelector(`[data-seo-check="${check.key}"]`);
+            const item = section?.querySelector(`[data-seo-check="${check.key}"]`);
             if (item) {
                 item.dataset.passed = String(check.passed);
                 item.querySelector('[data-check-indicator]').textContent = check.passed ? '✓' : '○';
@@ -155,7 +157,7 @@ if (root && form) {
                 link: { openOnClick: false, autolink: false, isAllowedUri: url => Boolean(safeUrl(url)) },
             }),
             Markdown, Image.configure({ allowBase64: false }), TableKit,
-            Placeholder.configure({ placeholder: 'Bắt đầu bài viết bằng vấn đề người đọc đang quan tâm…' }),
+            Placeholder.configure({ placeholder: root.dataset.placeholder }),
         ],
         editorProps: {
             attributes: {
@@ -374,7 +376,7 @@ if (root && form) {
                 list.appendChild(option);
             });
             imageDialog.querySelector('[type="file"]').value = '';
-            uploadButton.textContent = 'Đã tải ảnh. Có thể chèn vào bài.';
+            uploadButton.textContent = 'Đã tải ảnh. Có thể chèn vào nội dung.';
         } catch (failure) {
             dialogError(imageDialog, failure.message || 'Không thể kết nối để tải ảnh.');
             uploadButton.textContent = 'Tải lên thư viện';
@@ -453,7 +455,7 @@ if (root && form) {
     form.addEventListener('submit', event => {
         if (!body.value.trim()) {
             event.preventDefault();
-            setError('Nhập nội dung bài viết trước khi lưu.');
+            setError('Nhập nội dung trước khi lưu.');
             setMode('rich');
             editor.commands.focus();
         } else {
@@ -461,7 +463,7 @@ if (root && form) {
             try {
                 sessionStorage.setItem(root.dataset.pendingKey, root.dataset.draftKey);
             } catch {
-                draftStatus.textContent = 'Không thể cập nhật bản khôi phục. Bài vẫn được gửi để lưu.';
+                draftStatus.textContent = 'Không thể cập nhật bản khôi phục. Nội dung vẫn được gửi để lưu.';
             }
         }
     }, true);
@@ -469,7 +471,7 @@ if (root && form) {
     try {
         if (root.dataset.saveSucceeded === 'true') {
             const pendingKey = sessionStorage.getItem(root.dataset.pendingKey);
-            if (pendingKey?.startsWith('vf-post-draft-')) {
+            if (pendingKey?.startsWith(root.dataset.draftPrefix)) {
                 sessionStorage.removeItem(pendingKey);
             }
             sessionStorage.removeItem(root.dataset.pendingKey);
@@ -494,7 +496,7 @@ if (root && form) {
         editor.commands.setContent(body.value, { contentType: 'markdown', emitUpdate: false });
         root.querySelector('[data-draft-recovery]').hidden = true;
         analyze();
-        draftStatus.textContent = 'Đã khôi phục nội dung. Nhấn Lưu bài viết để lưu vào database.';
+        draftStatus.textContent = 'Đã khôi phục nội dung. Nhấn nút Lưu để lưu nội dung.';
     });
     root.querySelector('[data-discard-draft]').addEventListener('click', () => {
         try {
