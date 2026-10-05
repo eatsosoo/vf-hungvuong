@@ -41,7 +41,8 @@ class SiteController extends Controller
 
         return view('site.vehicles', ['vehicles' => Vehicle::query()->active()->with(['media', 'variants'])
             ->when($data['segment'] ?? null, fn ($query, $value) => $query->where('segment', $value))
-            ->when($data['q'] ?? null, fn ($query, $value) => $query->where('name', 'like', '%'.$value.'%'))
+            ->when(isset($data['q']) && $data['q'] !== '',
+                fn ($query) => $query->where('name', 'like', '%'.$data['q'].'%'))
             ->orderBy('name')->paginate(12)->withQueryString(),
             'segments' => Vehicle::query()->active()->whereNotNull('segment')->distinct()->pluck('segment')]);
     }
@@ -105,7 +106,7 @@ class SiteController extends Controller
             'category' => ['nullable', 'string', 'max:180'], 'tag' => ['nullable', 'string', 'max:180'],
             'page' => ['nullable', 'integer', 'min:1']]);
         $query = Post::query()->published()->with(['media', 'category']);
-        if (! empty($data['q'])) {
+        if (isset($data['q']) && $data['q'] !== '') {
             $query->where('title', 'like', '%'.$data['q'].'%');
         }
         foreach (['category' => 'category', 'tag' => 'tags'] as $key => $relation) {

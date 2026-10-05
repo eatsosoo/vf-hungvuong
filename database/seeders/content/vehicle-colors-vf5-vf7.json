@@ -1,0 +1,152 @@
+{
+    "vf5": [
+        {
+            "name": "Infinity Blanc",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-infinity-blanc.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-trang-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Zenith Grey",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-zenith-grey.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-xam-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Solar Ruby",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-solar-ruby.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-do-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Summer Yellow Body - Jet Black Roof",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-summer-yellow-body-jet-black-roof.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-vang-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Sky Blue - Infinity Blanc Roof",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-sky-blue-infinity-blanc-roof.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-xanh-duong-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Urban Mint",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf5-urban-mint.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf5",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf5/hinh-anh-vinfast-vf5-ngoai-that-mau-xanh-urban-desktop.webp",
+            "verified_at": "2026-10-05"
+        }
+    ],
+    "vf6": [
+        {
+            "name": "Infinity Blanc",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf6-infinity-blanc.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf6/hinh-anh-xe-vinfast-vf6-mau-trang-02-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Zenith Grey",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf6-zenith-grey.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf6/hinh-anh-xe-vinfast-vf6-mau-bac-02-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Jet Black",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf6-jet-black.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf6/hinh-anh-xe-vinfast-vf6-mau-den-02-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Urban Mint",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf6-urban-mint.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf6/hinh-anh-vinfast-vf6-mau-xanh-mint-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Solar Ruby",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf6-solar-ruby.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf6",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf6/hinh-anh-vinfast-vf6-mau-do-desktop.webp",
+            "verified_at": "2026-10-05"
+        }
+    ],
+    "vf7": [
+        {
+            "name": "Infinity Blanc",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf7-infinity-blanc.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf7/hinh-anh-vinfast-vf7-mau-trang-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Zenith Grey",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf7-zenith-grey.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf7/hinh-anh-vinfast-vf7-mau-xam-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Jet Black",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf7-jet-black.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf7/hinh-anh-vinfast-vf7-mau-den-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Solar Ruby",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf7-solar-ruby.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf7/hinh-anh-vinfast-vf7-mau-do-desktop.webp",
+            "verified_at": "2026-10-05"
+        },
+        {
+            "name": "Urban Mint",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf7-urban-mint.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-dien-vf7",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf7/hinh-anh-vinfast-vf7-mau-xanh-mint-desktop.webp",
+            "verified_at": "2026-10-05"
+        }
+    ]
+}

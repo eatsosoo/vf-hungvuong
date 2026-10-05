@@ -21,7 +21,7 @@ if (drawer && typeof drawer.showModal === 'function') {
     const fields = [...form.querySelectorAll('[name]')];
     const originalSubmit = submit.innerHTML;
     let opener;
-    let closeTimer;
+    let drawerAnimation;
     let previousOverflow;
     let previousPadding;
     let wasSubmitted = false;
@@ -105,12 +105,18 @@ if (drawer && typeof drawer.showModal === 'function') {
 
     const closeDrawer = () => {
         if (!drawer.open || drawer.dataset.closing) return;
+        const currentTransform = getComputedStyle(drawer).transform;
+        drawerAnimation?.cancel();
         if (reducedMotion.matches) {
             drawer.close();
             return;
         }
         drawer.dataset.closing = 'true';
-        closeTimer = window.setTimeout(() => drawer.close(), 280);
+        drawerAnimation = drawer.animate([
+            { transform: currentTransform },
+            { transform: 'translateX(100%)' },
+        ], { duration: 340, easing: 'cubic-bezier(0.4, 0, 0.6, 1)', fill: 'forwards' });
+        drawerAnimation.onfinish = () => drawer.close();
     };
 
     const openDrawer = trigger => {
@@ -150,13 +156,15 @@ if (drawer && typeof drawer.showModal === 'function') {
             document.body.style.paddingRight = `${padding + scrollbarWidth}px`;
         }
         document.documentElement.style.overflow = 'hidden';
-        drawer.dataset.opening = 'true';
         drawer.showModal();
+        if (!reducedMotion.matches) {
+            drawerAnimation = drawer.animate([
+                { transform: 'translateX(100%)' },
+                { transform: 'translateX(0)' },
+            ], { duration: 600, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        }
         trigger.setAttribute('aria-expanded', 'true');
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-            delete drawer.dataset.opening;
-            form.elements.namedItem('name').focus({ preventScroll: true });
-        }));
+        form.elements.namedItem('name').focus({ preventScroll: true });
     };
 
     document.querySelectorAll('[data-test-drive-open]').forEach(trigger => {
@@ -184,9 +192,9 @@ if (drawer && typeof drawer.showModal === 'function') {
             || event.clientY < bounds.top || event.clientY > bounds.bottom) closeDrawer();
     });
     drawer.addEventListener('close', () => {
-        window.clearTimeout(closeTimer);
+        drawerAnimation?.cancel();
+        drawerAnimation = undefined;
         delete drawer.dataset.closing;
-        delete drawer.dataset.opening;
         document.documentElement.style.overflow = previousOverflow;
         document.body.style.paddingRight = previousPadding;
         opener?.setAttribute('aria-expanded', 'false');

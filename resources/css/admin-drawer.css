@@ -1,0 +1,46 @@
+@layer components {
+    .admin-form-drawer {
+        @apply fixed inset-y-0 right-0 left-auto m-0 flex-col border-0 border-l border-line bg-white p-0 text-ink;
+        width: min(560px, 100%);
+        max-width: none;
+        height: 100dvh;
+        max-height: none;
+        overflow: hidden;
+        box-shadow: -16px 0 60px rgb(16 28 32 / 0.15);
+    }
+
+    .admin-form-drawer[open] {
+        display: flex;
+        animation: admin-drawer-enter 220ms ease-out;
+    }
+
+    .admin-form-drawer::backdrop {
+        background: rgb(16 28 32 / 0.55);
+    }
+
+    .admin-drawer-header {
+        @apply flex shrink-0 items-center justify-between gap-4 border-b border-line px-6 py-5 sm:px-8;
+    }
+
+    .admin-drawer-header h2 {
+        @apply mt-1 text-xl font-semibold;
+    }
+
+    .admin-drawer-body {
+        @apply min-h-0 flex-1 overflow-y-auto p-6 sm:p-8;
+        overscroll-behavior: contain;
+    }
+
+    .admin-drawer-actions {
+        @apply mt-6 flex flex-wrap justify-end gap-3 border-t border-line pt-5;
+    }
+
+    @keyframes admin-drawer-enter {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .admin-form-drawer[open] { animation: none; }
+    }
+}

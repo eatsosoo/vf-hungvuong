@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\VehicleComparisonController;
 use Illuminate\Support\Facades\Route;
 
 foreach (['' => '', 'en' => 'en.'] as $prefix => $namePrefix) {
@@ -11,6 +12,7 @@ foreach (['' => '', 'en' => 'en.'] as $prefix => $namePrefix) {
         ->group(function (): void {
             Route::get('/', [SiteController::class, 'home'])->name('home');
             Route::get('/xe', [SiteController::class, 'vehicles'])->name('vehicles.index');
+            Route::get('/so-sanh-xe', VehicleComparisonController::class)->name('vehicles.compare');
             Route::get('/xe/{slug}', [SiteController::class, 'vehicle'])->name('vehicles.show');
             Route::get('/bai-viet', [SiteController::class, 'posts'])->name('posts.index');
             Route::get('/bai-viet/{slug}', [SiteController::class, 'post'])->name('posts.show');

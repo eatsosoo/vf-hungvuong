@@ -2,7 +2,10 @@
 @section('title', 'Tài khoản & quyền')
 @section('content')
     <x-admin.page-heading title="Tài khoản & quyền">
-        <a class="button" href="{{ route('admin.users.create') }}">
+        <a class="button" href="{{ route('admin.users.create') }}" data-drawer-open="account-drawer"
+            data-drawer-title="Thêm tài khoản" data-drawer-action="{{ route('admin.users.store') }}"
+            data-drawer-values="{{ json_encode(['_record' => '', 'name' => '', 'email' => '',
+                'role' => 'sales', 'is_active' => '1']) }}" aria-haspopup="dialog" aria-controls="account-drawer">
             Thêm tài khoản
         </a>
     </x-admin.page-heading>
@@ -87,6 +90,12 @@
                         <td class="table-actions-column">
                             <div class="table-row-actions">
                                 <a class="table-action" href="{{ route('admin.users.edit', $user) }}"
+                                    data-drawer-open="account-drawer" data-drawer-title="Chỉnh sửa tài khoản"
+                                    data-drawer-action="{{ route('admin.users.update', $user) }}"
+                                    data-drawer-values="{{ json_encode(['_record' => $user->id,
+                                        'name' => $user->name, 'email' => $user->email,
+                                        'role' => $user->role->value, 'is_active' => $user->is_active ? '1' : '0']) }}"
+                                    aria-haspopup="dialog" aria-controls="account-drawer"
                                     aria-label="Sửa #{{ $user->id }}" title="Sửa">
                                     <x-admin.icon name="edit" />
                                 </a>
@@ -105,4 +114,20 @@
             </tbody>
         </x-admin.table>
     </x-admin.table-block>
+    <x-admin.form-drawer id="account-drawer"
+        :title="$account->exists ? 'Chỉnh sửa tài khoản' : 'Thêm tài khoản'"
+        :auto-open="$openDrawer">
+        <form method="post"
+            action="{{ $account->exists ? route('admin.users.update', $account) : route('admin.users.store') }}">
+            @csrf
+            <input type="hidden" name="_method" value="PUT" @disabled(! $account->exists)>
+            <input type="hidden" name="_drawer" value="account">
+            <input type="hidden" name="_record" value="{{ $account->id }}">
+            @include('admin.users.fields', ['fieldPrefix' => 'account-drawer'])
+            <div class="admin-drawer-actions">
+                <button type="button" class="secondary" data-drawer-cancel>Hủy</button>
+                <button type="submit">Lưu tài khoản</button>
+            </div>
+        </form>
+    </x-admin.form-drawer>
 @endsection

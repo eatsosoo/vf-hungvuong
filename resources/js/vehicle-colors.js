@@ -105,12 +105,12 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
             const timing = { duration: 550, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' };
             animations = [
                 image.animate([
-                    { transform: `translateX(${direction * 100}%)` },
-                    { transform: 'translateX(0)' },
+                    { opacity: 0, transform: `translateX(${direction * 100}%)` },
+                    { opacity: 1, transform: 'translateX(0)' },
                 ], timing),
                 outgoingImage.animate([
-                    { transform: 'translateX(0)' },
-                    { transform: `translateX(${direction * -100}%)` },
+                    { opacity: 1, transform: 'translateX(0)' },
+                    { opacity: 0, transform: `translateX(${direction * -100}%)` },
                 ], timing),
             ];
             Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
@@ -135,6 +135,7 @@ document.querySelectorAll('[data-vehicle-color-viewer]').forEach(viewer => {
             selectColor(option);
         });
         option.addEventListener('keydown', event => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             let nextIndex;
             if (event.key === 'ArrowRight') nextIndex = (index + 1) % options.length;
             if (event.key === 'ArrowLeft') nextIndex = (index - 1 + options.length) % options.length;

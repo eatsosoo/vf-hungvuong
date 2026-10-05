@@ -26,6 +26,7 @@ class UserController extends Controller
             'per_page' => ['nullable', 'integer', Rule::in([10, 20, 50, 100])],
             'sort' => ['nullable', Rule::in(['name', 'email', 'role', 'is_active', 'id', 'updated_at', 'created_at'])],
             'direction' => ['nullable', Rule::in(['asc', 'desc'])],
+            'drawer' => ['nullable', 'regex:/\A(?:new|[1-9][0-9]*)\z/'],
         ]);
         $query = User::query();
         foreach (['name', 'email'] as $key) {
@@ -40,29 +41,41 @@ class UserController extends Controller
             $query->where('is_active', (bool) $filters['is_active']);
         }
 
+        $selected = $request->old('_drawer') === 'account'
+            ? $request->old('_record') : $request->query('drawer');
+        $account = is_scalar($selected) && ctype_digit((string) $selected)
+            ? User::query()->findOrFail($selected) : new User;
+        $request->query->remove('drawer');
+
         return view('admin.users.index', [
+            'account' => $account,
+            'openDrawer' => $selected !== null || $request->old('_drawer') === 'account',
             'users' => $query->orderBy($filters['sort'] ?? 'name', $filters['direction'] ?? 'asc')->orderBy('id')
                 ->paginate((int) ($filters['per_page'] ?? 20))->withQueryString(),
         ]);
     }
 
-    public function create(): View
+    public function create(): RedirectResponse
     {
         Gate::authorize('manage-users');
 
-        return view('admin.users.form', ['account' => new User]);
+        return redirect()->route('admin.users.index', ['drawer' => 'new']);
     }
 
-    public function edit(User $user): View
+    public function edit(User $user): RedirectResponse
     {
         Gate::authorize('manage-users');
 
-        return view('admin.users.form', ['account' => $user]);
+        return redirect()->route('admin.users.index', ['drawer' => $user->id]);
     }
 
     public function store(UserRequest $request, SaveUser $action): RedirectResponse
     {
         $user = $action->handle($request->validated());
+
+        if ($request->input('_drawer') === 'account') {
+            return back()->with('success', 'Đã tạo tài khoản.');
+        }
 
         return redirect()->route('admin.users.edit', $user)->with('success', 'Đã tạo tài khoản.');
     }

@@ -27,13 +27,20 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Bộ chuyển VI/EN giữ trang, bộ lọc và màu xe; metadata ngôn ngữ phản ánh giao diện đang chọn.
   Nội dung xe, ưu đãi, bài viết và thông tin nhập từ admin giữ nguyên, không tự dịch dữ liệu.
 - Navbar trang chủ và các trang client dùng chung component, bố cục và mục điều hướng.
+  Từ chiều rộng màn hình 1440px, khung client mở rộng tối đa 1580px, đệm ngang 48px;
+  nội dung trang chủ và navbar cùng căn theo vùng nội dung rộng tối đa 1484px.
+  Nội dung bài viết giữ giới hạn chiều dài dòng để dễ đọc.
   Bộ chọn ngôn ngữ là dropdown cờ Việt Nam/Anh, đặt ở ngoài cùng bên phải, kích thước gọn.
   Mobile giữ nút menu và chọn ngôn ngữ trên hàng đầu; CTA lái thử nằm trong menu khi thiếu không gian.
+  Bấm “Dòng xe” mở mega menu ảnh các xe đang hoạt động, kèm lối tắt so sánh và lái thử;
+  mở trượt xuống, đóng trượt lên, hỗ trợ Escape, bấm ngoài và giảm chuyển động theo hệ điều hành.
 - Logo website dùng PNG nền trong suốt tại `public/assets/vinfast/logo.png`.
 - Trang ưu đãi hiển thị quyền lợi, xe áp dụng, thời hạn và bộ lọc theo dòng xe; không tự suy diễn mức giảm giá.
   Phần ảnh trong card ưu đãi dùng nền trung tính, không dùng gradient xanh.
 - Trang chi tiết xe có bộ chọn màu ngoại thất, đổi ảnh với hiệu ứng carousel trượt ngang trong 550ms:
-  ảnh hiện tại trượt ra, ảnh màu mới trượt vào theo thứ tự màu; chiều trượt theo phím trái/phải khi dùng bàn phím.
+  bảng chọn màu trải hết chiều rộng vùng giới thiệu xe, nằm dưới ảnh và nội dung; các nút màu căn giữa.
+  ảnh hiện tại trượt ra và mờ dần, ảnh màu mới trượt vào và rõ dần theo thứ tự màu;
+  chiều trượt theo phím trái/phải khi dùng bàn phím.
   Nền ảnh xe dùng nền than của trang, không thêm lớp ánh sáng xanh.
   Khi mở trang, ảnh xe trượt từ phải sang trái trong 850ms; tiêu đề và nội dung giới thiệu căn đầu dòng.
   Giảm chuyển động chỉ tắt hiệu ứng vào trang; carousel vẫn chạy khi người dùng chủ động chọn màu.
@@ -41,9 +48,16 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
   Danh mục màu và ảnh tham chiếu nguồn VinFast Việt Nam, lưu nguồn trong dữ liệu seed; ưu tiên ảnh xe nền trong suốt.
   Nút chọn màu hiển thị mã HEX tương ứng; xe hai màu hiển thị cả màu thân và màu nóc.
 - CTA đăng ký lái thử mở drawer từ bên phải trên trang hiện tại, chọn sẵn xe khi có ngữ cảnh.
+  Drawer trượt từ phải sang trái trong 600ms, đóng về bên phải trong 340ms; tắt animation khi giảm chuyển động.
   Header gọn; hiển thị ảnh, tên và phiên bản xe vừa chọn, thu gọn phần chọn xe và cho phép đổi xe khi cần.
   Form gửi tới endpoint khách hàng hiện có và hiển thị validation/thành công ngay trong drawer.
   Component dùng chung cho trang chủ và layout client; khi JavaScript không khả dụng, dùng trang liên hệ.
+- Client có trang so sánh hai mẫu xe đang hiển thị, truy cập từ danh sách hoặc chi tiết xe.
+  Hai lựa chọn lưu trong query URL, giữ khi đổi VI/EN và dùng được khi không có JavaScript.
+  Bảng đặt giá tham khảo, phiên bản và thông số hiện có cạnh nhau; làm nổi bật thông số khác nhau,
+  ghi rõ thông số thiếu, giữ nguyên ngữ cảnh phiên bản, nguồn và chuẩn NEDC/WLTP, không tự xếp hạng xe.
+  Bảng thông số kỹ thuật nằm ngay sau bộ chọn xe, trước phần hình ảnh và giới thiệu hai mẫu xe.
+  Không cho chọn hai lần cùng mẫu hoặc xe đã ẩn; CTA lái thử giữ ngữ cảnh từng xe.
 - Dùng lại Blade Components cho field input/textarea, select, chọn ảnh, tiêu đề, điều hướng, bảng, phân trang, trạng thái rỗng, badge và thống kê. Field cần label, ID riêng, lỗi liên kết bằng ARIA và giữ giá trị cũ sau validation.
 - Input và textarea có placeholder theo nội dung hoặc định dạng cần nhập; component field dùng mặc định
   theo loại/tên field và cho phép ghi đè. Placeholder client được dịch Việt/Anh, luôn giữ label riêng.
@@ -74,6 +88,9 @@ Các quy tắc dưới đây mô tả cách triển khai đã thống nhất, kh
 - Form khuyến mãi nhóm thông tin, nội dung và xe áp dụng ở cột chính; thời gian, hiển thị và ảnh ở cột phụ.
   Màn hình nhỏ xếp một cột. Chọn nhiều xe bằng checkbox, giữ cả trạng thái bỏ chọn toàn bộ sau validation lỗi.
 - Admin dùng controller, Form Request, Policy và Blade của Laravel; phân quyền bằng Enum vai trò, Gate và Policy, không thêm package admin.
+  Thêm/sửa tài khoản và phân loại bài viết dùng drawer bên phải trên trang danh sách;
+  giữ bộ lọc, dữ liệu nhập và lỗi validation. Danh mục có bài viết ở bất kỳ trạng thái nào không được xóa;
+  giao diện khóa nút xóa và máy chủ kiểm tra trước khi xóa.
 - Trình soạn thảo dùng Markdown, render bằng `league/commonmark` đang có sẵn với HTML bị loại bỏ và liên kết nguy hiểm bị chặn. Hỗ trợ bảng và mục lục.
 - Editor bài viết dùng Tiptap 3, được người dùng cho phép thêm thư viện, với chế độ trực quan và Markdown.
   Dữ liệu lưu vẫn là Markdown; xem trước và chấm SEO qua endpoint admin có xác thực, CSRF và rate limit.

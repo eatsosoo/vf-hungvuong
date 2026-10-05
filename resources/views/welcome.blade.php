@@ -51,7 +51,7 @@
         </svg>
         <main id="top">
             <section class="hero" aria-labelledby="heroTitle">
-                <x-site.navbar home />
+                <x-site.navbar home :vehicles="$testDriveVehicles" />
                 <div class="hero-content container">
                     <div class="hero-copy">
                         <p class="eyebrow">

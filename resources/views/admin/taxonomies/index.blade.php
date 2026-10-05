@@ -1,21 +1,20 @@
 @extends('layouts.admin')
 @section('title', 'Phân loại nội dung')
 @section('content')
-    <x-admin.page-heading :title="$kind === 'categories' ? 'Danh mục bài viết' : 'Thẻ nội dung'" />
-    <form class="panel two-columns" method="post" action="{{ route('admin.taxonomies.store', $kind) }}">
-        @csrf
-        <x-field name="name" label="Tên" required />
-        <x-field name="slug" label="Đường dẫn" slug-source="name" required />
-        <button>
-            Thêm mới
-        </button>
-    </form>
+    <x-admin.page-heading :title="$kind === 'categories' ? 'Danh mục bài viết' : 'Thẻ nội dung'">
+        <a class="button" href="{{ route('admin.taxonomies.index', [$kind, 'drawer' => 'new']) }}"
+            data-drawer-open="taxonomy-drawer"
+            data-drawer-title="{{ $kind === 'categories' ? 'Thêm danh mục bài viết' : 'Thêm thẻ nội dung' }}"
+            data-drawer-action="{{ route('admin.taxonomies.store', $kind) }}"
+            data-drawer-values="{{ json_encode(['_record' => '', 'name' => '', 'slug' => '']) }}"
+            aria-haspopup="dialog" aria-controls="taxonomy-drawer">Thêm mới</a>
+    </x-admin.page-heading>
     <form id="table-filters" class="table-toolbar" method="get"
         action="{{ route('admin.taxonomies.index', $kind) }}">
         <input type="hidden" name="per_page" value="{{ $records->perPage() }}">
         <div class="table-toolbar-copy">
             <strong>{{ number_format($records->total(), 0, ',', '.') }} phân loại</strong>
-            <p>Lọc theo tên hoặc đường dẫn. Chỉnh sửa trực tiếp rồi chọn Cập nhật.</p>
+            <p>Lọc theo tên hoặc đường dẫn. Chọn biểu tượng sửa để mở biểu mẫu.</p>
         </div>
         @if(request()->except('page', 'per_page', 'sort', 'direction'))
             <a class="button secondary" href="{{ route('admin.taxonomies.index', $kind) }}">Xóa bộ lọc</a>
@@ -58,35 +57,38 @@
                     <tr>
                         <td class="table-secondary table-id">#{{ $record->id }}</td>
                         <td>
-                            <x-field name="name" :id="'taxonomy-name-'.$record->id" label="Tên phân loại"
-                                :value="$record->name" :use-old="false"
-                                :form="'taxonomy-update-'.$record->id" required />
+                            <span class="table-title">{{ $record->name }}</span>
+                            @if($kind === 'categories')
+                                <small class="block text-muted">{{ $record->posts_count }} bài viết</small>
+                            @endif
                         </td>
                         <td>
-                            <x-field name="slug" :id="'taxonomy-slug-'.$record->id" label="Đường dẫn"
-                                slug-source="name" :slug-auto="false"
-                                :value="$record->slug" :use-old="false"
-                                :form="'taxonomy-update-'.$record->id" required />
+                            {{ $record->slug }}
                         </td>
                         <x-admin.record-dates :record="$record" />
                         <td class="table-actions-column">
                             <div class="table-row-actions">
-                                <form id="taxonomy-update-{{ $record->id }}"
-                                    method="post" action="{{ route('admin.taxonomies.update', [$kind, $record->id]) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="table-action secondary" aria-label="Cập nhật #{{ $record->id }}"
-                                        title="Cập nhật">
-                                        <x-admin.icon name="save" />
-                                    </button>
-                                </form>
+                                <a class="table-action"
+                                    href="{{ route('admin.taxonomies.index', [$kind, 'drawer' => $record->id]) }}"
+                                    data-drawer-open="taxonomy-drawer"
+                                    data-drawer-title="{{ $kind === 'categories'
+                                        ? 'Chỉnh sửa danh mục bài viết' : 'Chỉnh sửa thẻ nội dung' }}"
+                                    data-drawer-action="{{ route('admin.taxonomies.update', [$kind, $record->id]) }}"
+                                    data-drawer-values="{{ json_encode(['_record' => $record->id,
+                                        'name' => $record->name, 'slug' => $record->slug]) }}"
+                                    aria-label="Sửa #{{ $record->id }}" title="Sửa"
+                                    aria-haspopup="dialog" aria-controls="taxonomy-drawer">
+                                    <x-admin.icon name="edit" />
+                                </a>
                                 <form method="post"
                                     action="{{ route('admin.taxonomies.destroy', [$kind, $record->id]) }}"
                                     data-confirm="Xóa phân loại này?">
                                     @csrf
                                     @method('DELETE')
                                     <button class="table-action danger" aria-label="Xóa #{{ $record->id }}"
-                                        title="Xóa">
+                                        @disabled($kind === 'categories' && $record->posts_count > 0)
+                                        title="{{ $kind === 'categories' && $record->posts_count > 0
+                                            ? 'Không thể xóa danh mục đang có bài viết' : 'Xóa' }}">
                                         <x-admin.icon name="trash" />
                                     </button>
                                 </form>
@@ -104,4 +106,22 @@
             </tbody>
         </x-admin.table>
     </x-admin.table-block>
+    <x-admin.form-drawer id="taxonomy-drawer" :auto-open="$openDrawer"
+        :title="($taxonomy->exists ? 'Chỉnh sửa ' : 'Thêm ').($kind === 'categories'
+            ? 'danh mục bài viết' : 'thẻ nội dung')">
+        <form method="post"
+            action="{{ $taxonomy->exists
+                ? route('admin.taxonomies.update', [$kind, $taxonomy->id])
+                : route('admin.taxonomies.store', $kind) }}">
+            @csrf
+            <input type="hidden" name="_method" value="PUT" @disabled(! $taxonomy->exists)>
+            <input type="hidden" name="_drawer" value="taxonomy">
+            <input type="hidden" name="_record" value="{{ $taxonomy->id }}">
+            @include('admin.taxonomies.fields')
+            <div class="admin-drawer-actions">
+                <button type="button" class="secondary" data-drawer-cancel>Hủy</button>
+                <button type="submit">Lưu phân loại</button>
+            </div>
+        </form>
+    </x-admin.form-drawer>
 @endsection

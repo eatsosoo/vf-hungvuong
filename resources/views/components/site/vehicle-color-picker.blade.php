@@ -4,7 +4,7 @@
     $selectedMedia = $selectedColor?->media ?? $vehicle->media;
 @endphp
 
-<div id="colors" class="vehicle-color-viewer scroll-mt-28" data-vehicle-color-viewer>
+<div class="vehicle-color-viewer" data-vehicle-color-viewer>
     <figure class="vehicle-color-stage" data-vehicle-stage
         aria-label="{{ __('Hình ảnh :vehicle', ['vehicle' => $vehicle->name]) }}">
         @if($selectedMedia)
@@ -40,7 +40,7 @@
     </figure>
 
     @if($colors->isNotEmpty())
-        <div class="vehicle-color-controls">
+        <div id="colors" class="vehicle-color-controls scroll-mt-28">
             <div class="vehicle-color-caption">
                 <div>
                     <p class="vehicle-color-eyebrow">{{ __('Màu ngoại thất') }}</p>

@@ -62,8 +62,64 @@
 }
 
 @layer components {
+    .vehicle-comparison-form {
+        @apply relative -mt-8 rounded-2xl border border-line bg-white p-5 shadow-sm sm:p-7;
+    }
+
+    .vehicle-comparison-card {
+        @apply flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-white;
+    }
+
+    .vehicle-comparison-image {
+        @apply flex aspect-[3/2] items-center justify-center bg-paper p-3 sm:p-5;
+    }
+
+    .client-shell .vehicle-comparison-name {
+        @apply mt-3 text-base leading-6 sm:text-xl;
+        font-size: var(--type-card-title);
+    }
+
+    .vehicle-comparison-table-wrapper {
+        @apply overflow-x-auto rounded-2xl border border-line bg-white;
+    }
+
+    .vehicle-comparison-table {
+        @apply w-full min-w-[640px] table-fixed border-collapse text-left text-base;
+    }
+
+    .vehicle-comparison-table th, .vehicle-comparison-table td {
+        @apply border-b border-line px-5 py-5 align-top leading-6 break-words sm:px-6;
+    }
+
+    .vehicle-comparison-table thead {
+        @apply bg-night text-white;
+    }
+
+    .vehicle-comparison-table thead th:first-child {
+        @apply w-1/4;
+    }
+
+    .vehicle-comparison-table tbody th {
+        @apply text-sm font-medium;
+    }
+
+    .vehicle-comparison-table tr[data-different='true'] {
+        @apply bg-brand/10;
+    }
+
+    .vehicle-comparison-table tbody tr:last-child > * {
+        @apply border-b-0;
+    }
+
     .client-container {
         @apply mx-auto w-full max-w-[1260px] px-5 sm:px-8 lg:px-10;
+    }
+
+    @media (min-width: 1440px) {
+        .client-container {
+            max-width: 1580px;
+            padding-inline: 48px;
+        }
     }
 
     .client-button, .client-button-secondary, .client-button-dark,

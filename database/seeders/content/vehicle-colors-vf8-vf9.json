@@ -1,0 +1,24 @@
+{
+    "vf8": [
+        {
+            "name": "Infinity Blanc",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf8-white.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf8",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/VF-8/hinh-anh-xe-VinFast-vf8-ngoai-that-mau-trang-01.webp",
+            "verified_at": "2026-10-05"
+        }
+    ],
+    "vf9": [
+        {
+            "name": "Infinity Blanc",
+            "hex": null,
+            "secondary_hex": null,
+            "image": "vinfast-vf9-white.webp",
+            "source": "https://vinfastauto.com/vn_vi/dat-coc-xe-vf9",
+            "image_source": "https://static-cms-prod.vinfastauto.com/statics/car/vf9/hinh-anh-vinfast-vf9-infinity-blanc-desktop-20260915.webp",
+            "verified_at": "2026-10-05"
+        }
+    ]
+}

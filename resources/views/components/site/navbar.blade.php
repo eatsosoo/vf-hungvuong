@@ -1,10 +1,11 @@
-@props(['home' => false, 'preview' => false])
+@props(['home' => false, 'preview' => false, 'vehicles' => []])
 @php
     $homeUrl = route($clientRoutePrefix.'home');
     $navigation = [
         ['label' => __('Trang chủ'), 'url' => $home ? '#top' : $homeUrl,
             'active' => request()->routeIs('home', 'en.home')],
         ['label' => __('Dòng xe'), 'url' => $home ? '#models' : route($clientRoutePrefix.'vehicles.index'),
+            'vehicleMenu' => true,
             'active' => request()->routeIs('vehicles.*', 'en.vehicles.*')],
         ['label' => __('Trải nghiệm'), 'url' => $home ? '#experience' : $homeUrl.'#experience', 'active' => false],
         ['label' => __('Góc tư vấn'), 'url' => route($clientRoutePrefix.'posts.index'),
@@ -27,7 +28,10 @@
         <nav id="site-navigation" class="site-navbar-menu" data-site-navigation
             aria-label="{{ __('Điều hướng chính') }}">
             @foreach($navigation as $item)
-                <a href="{{ $item['url'] }}" @if($item['active']) aria-current="page" @endif>
+                <a href="{{ $item['url'] }}" @if($item['active']) aria-current="page" @endif
+                    @if($item['vehicleMenu'] ?? false)
+                        data-vehicle-menu-open aria-expanded="false" aria-controls="vehicle-menu"
+                    @endif>
                     {{ $item['label'] }}
                 </a>
             @endforeach
@@ -49,4 +53,5 @@
             @endif
         </div>
     </div>
+    <x-site.vehicle-menu :vehicles="$vehicles" />
 </header>

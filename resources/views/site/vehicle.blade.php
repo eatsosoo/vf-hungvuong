@@ -70,6 +70,11 @@
                     :selected-color="$selectedColor"
                 />
             </div>
+            <a class="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-brand"
+                href="{{ route($clientRoutePrefix.'vehicles.compare', ['first' => $vehicle->slug]) }}">
+                {{ __('So sánh với mẫu xe khác') }}
+                <x-admin.icon name="arrow" class="size-4" />
+            </a>
         </div>
     </section>
 

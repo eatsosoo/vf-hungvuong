@@ -30,5 +30,9 @@
             href="{{ route($clientRoutePrefix.'vehicles.show', $vehicle->slug) }}">
             {{ __('Khám phá mẫu xe') }} <x-admin.icon name="arrow" class="size-4" />
         </a>
+        <a class="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-green-text"
+            href="{{ route($clientRoutePrefix.'vehicles.compare', ['first' => $vehicle->slug]) }}">
+            {{ __('So sánh xe này') }}
+        </a>
     </div>
 </article>

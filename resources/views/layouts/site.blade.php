@@ -11,6 +11,7 @@
         ['label' => __('Ưu đãi'), 'route' => 'promotions.index', 'match' => 'promotions.*'],
         ['label' => __('Góc tư vấn'), 'route' => 'posts.index', 'match' => 'posts.*'],
     ];
+    $structuredData = ['@context' => 'https://schema.org', '@graph' => $pageSeo['structuredData'] ?? []];
 @endphp
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
@@ -48,7 +49,7 @@
         @if(! empty($pageSeo['structuredData']))
             <script type="application/ld+json">
                 {!! json_encode(
-                    ['@context' => 'https://schema.org', '@graph' => $pageSeo['structuredData']],
+                    $structuredData,
                     JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE
                 ) !!}
             </script>
@@ -66,7 +67,7 @@
         >
             {{ __('Đến nội dung chính') }}
         </a>
-        <x-site.navbar :preview="$preview ?? false" />
+        <x-site.navbar :preview="$preview ?? false" :vehicles="$testDriveVehicles" />
         <main id="main-content" @hasSection('full_width') @else class="client-container py-12 sm:py-16" @endif>
             @if(session('success') || $errors->any())
                 <div class="client-container pt-6"><x-feedback /></div>

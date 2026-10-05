@@ -110,7 +110,7 @@ class CatalogTableFiltersTest extends TestCase
             );
         $this->get(route('admin.'.$resource.'.index', ['slug' => 'khong-co-ket-qua']))
             ->assertOk()
-            ->assertSee('Chưa có nội dung phù hợp')
+            ->assertSee($resource === 'vehicles' ? 'Chưa có mẫu xe phù hợp' : 'Chưa có nội dung phù hợp')
             ->assertSee('Xóa bộ lọc')
             ->assertViewHas('records', fn (LengthAwarePaginator $records): bool => $records->total() === 0);
     }

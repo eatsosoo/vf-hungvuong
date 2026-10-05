@@ -4,9 +4,12 @@
     <p class="eyebrow">
         {{ __('HÀNH TRÌNH THUẦN ĐIỆN') }}
     </p>
-    <h1>
-        {{ __('Chọn chiếc xe phù hợp với bạn.') }}
-    </h1>
+    <div class="flex flex-wrap items-end justify-between gap-5">
+        <h1>{{ __('Chọn chiếc xe phù hợp với bạn.') }}</h1>
+        <a class="client-button-secondary" href="{{ route($clientRoutePrefix.'vehicles.compare') }}">
+            {{ __('So sánh xe') }} <x-admin.icon name="arrow" class="size-4" />
+        </a>
+    </div>
     <form class="filters" method="get">
         <x-field name="q" label="{{ __('Tìm mẫu xe') }}" :value="request('q')" />
         <label class="field">

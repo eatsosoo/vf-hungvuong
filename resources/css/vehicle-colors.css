@@ -1,10 +1,11 @@
 @layer components {
     .vehicle-color-viewer {
-        @apply min-w-0;
+        @apply min-w-0 lg:contents;
     }
 
     .vehicle-color-stage {
         @apply relative isolate m-0 aspect-[4/3] w-full overflow-hidden sm:aspect-[3/2];
+        @apply lg:col-start-2 lg:row-start-1;
     }
 
     .vehicle-color-image {
@@ -30,7 +31,8 @@
     }
 
     .vehicle-color-controls {
-        @apply relative mx-auto max-w-xl rounded-2xl border border-white/15 bg-white/5 p-5 sm:px-6;
+        @apply relative w-full rounded-2xl border border-white/15 bg-white/5 p-5 sm:px-6;
+        @apply lg:col-span-2;
     }
 
     .vehicle-color-caption {
@@ -51,7 +53,7 @@
     }
 
     .vehicle-color-options {
-        @apply mt-4 flex flex-wrap gap-2;
+        @apply mt-4 flex flex-wrap justify-center gap-2;
     }
 
     .vehicle-color-option {
@@ -80,7 +82,7 @@
     }
 
     .vehicle-color-hint {
-        @apply mt-3 text-xs leading-5 text-white/65;
+        @apply mt-3 text-center text-xs leading-5 text-white/65;
     }
 
     .vehicle-color-feedback {
